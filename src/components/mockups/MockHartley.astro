@@ -1,0 +1,339 @@
+---
+// Concept website for a fictional residential construction company.
+// SVG ids are suffixed per instance so the mock can appear several times on one page.
+const uid = Math.random().toString(36).slice(2, 8)
+const id = (name: string) => `hs-${name}-${uid}`
+---
+
+<div class="mk" aria-hidden="true">
+  <header class="nav">
+    <span class="logo">Hartley <i>&amp;</i> Stone</span>
+    <span class="links"><span>Projects</span><span>Services</span><span>Process</span><span>About</span></span>
+    <span class="btn">Request a consultation</span>
+    <span class="burger"><i></i><i></i></span>
+  </header>
+
+  <div class="hero">
+    <div class="copy">
+      <span class="kicker">Residential construction · Surrey</span>
+      <p class="h">Homes built to last generations.</p>
+      <p class="p">New builds, extensions and complete renovations, delivered by one accountable team.</p>
+      <div class="ctas"><span class="btn">View our projects</span><span class="more">Our process →</span></div>
+    </div>
+
+    <div class="art">
+      <svg viewBox="0 0 600 440" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id={id('sky')} x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#dfe5e2"></stop>
+            <stop offset="1" stop-color="#efece6"></stop>
+          </linearGradient>
+          <linearGradient id={id('glow')} x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#f7dca6"></stop>
+            <stop offset="1" stop-color="#d6a25f"></stop>
+          </linearGradient>
+          <linearGradient id={id('glass')} x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#5d6a6c"></stop>
+            <stop offset="0.55" stop-color="#2f393c"></stop>
+            <stop offset="1" stop-color="#46534f"></stop>
+          </linearGradient>
+          <pattern id={id('slats')} width="9" height="10" patternUnits="userSpaceOnUse">
+            <rect width="9" height="10" fill="#3a332d"></rect>
+            <rect width="1.6" height="10" fill="#2a241f"></rect>
+          </pattern>
+        </defs>
+        <rect width="600" height="440" fill={`url(#${id('sky')})`}></rect>
+        <!-- trees behind -->
+        <circle cx="70" cy="300" r="62" fill="#a9b3a2"></circle>
+        <circle cx="120" cy="320" r="48" fill="#97a28f"></circle>
+        <circle cx="540" cy="285" r="70" fill="#9aa592"></circle>
+        <circle cx="585" cy="320" r="50" fill="#899580"></circle>
+        <!-- ground floor volume -->
+        <rect x="90" y="262" width="430" height="128" fill="#ebe6dd"></rect>
+        <rect x="82" y="254" width="120" height="9" fill="#2a2622"></rect>
+        <!-- upper floor cantilever, timber -->
+        <rect x="176" y="158" width="370" height="104" fill={`url(#${id('slats')})`}></rect>
+        <rect x="168" y="150" width="386" height="9" fill="#2a2622"></rect>
+        <rect x="176" y="262" width="344" height="8" fill="rgb(0 0 0 / 0.14)"></rect>
+        <!-- upper window -->
+        <rect x="352" y="178" width="170" height="64" fill={`url(#${id('glass')})`}></rect>
+        <path d="M409 178v64M465 178v64" stroke="#1f1b18" stroke-width="3"></path>
+        <rect x="352" y="178" width="170" height="64" fill="none" stroke="#1f1b18" stroke-width="3"></rect>
+        <!-- ground floor glazing, lit -->
+        <rect x="236" y="284" width="270" height="106" fill={`url(#${id('glow')})`}></rect>
+        <rect x="236" y="284" width="270" height="106" fill="none" stroke="#1f1b18" stroke-width="3"></rect>
+        <path d="M303 284v106M371 284v106M439 284v106" stroke="#1f1b18" stroke-width="3"></path>
+        <rect x="250" y="330" width="40" height="34" fill="rgb(70 45 20 / 0.25)"></rect>
+        <rect x="390" y="320" width="34" height="70" fill="rgb(70 45 20 / 0.18)"></rect>
+        <!-- side window + door -->
+        <rect x="112" y="290" width="62" height="64" fill={`url(#${id('glass')})`} stroke="#1f1b18" stroke-width="3"></rect>
+        <rect x="192" y="300" width="28" height="90" fill="#2a2622"></rect>
+        <!-- ground -->
+        <rect x="0" y="390" width="600" height="50" fill="#cfc9be"></rect>
+        <rect x="0" y="390" width="600" height="4" fill="#bdb6a9"></rect>
+        <rect x="180" y="394" width="70" height="46" fill="#ddd8cd"></rect>
+      </svg>
+      <span class="badge"><b>Extension</b> Completed project, Guildford</span>
+    </div>
+  </div>
+
+  <div class="strip">
+    <span><b>New builds</b>Design and build</span>
+    <span><b>Extensions</b>Single and double storey</span>
+    <span><b>Renovations</b>Whole-home refurbishment</span>
+  </div>
+</div>
+
+<style>
+  .mk {
+    --bg: #efede8;
+    --ink: #1f1d1a;
+    --muted: #6d675f;
+    --brass: #765a2b;
+    container-type: inline-size;
+    min-height: 100%;
+    display: grid;
+    gap: 0;
+    padding: 2.6cqi 4cqi 4cqi;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    line-height: 1.25;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 3.2cqi;
+    padding-bottom: 2.4cqi;
+    border-bottom: 1px solid rgb(31 29 26 / 0.12);
+  }
+
+  .logo {
+    margin-right: auto;
+    font-size: 1.7cqi;
+    font-weight: 600;
+    font-stretch: 100%;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .logo i {
+    font-style: normal;
+    color: var(--brass);
+  }
+
+  .links {
+    display: flex;
+    gap: 2.8cqi;
+    font-size: 1.4cqi;
+    color: var(--muted);
+  }
+
+  .btn {
+    padding: 1.1cqi 2cqi;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 1.35cqi;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .burger {
+    display: none;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    align-items: center;
+    gap: 4cqi;
+    padding-top: 4.4cqi;
+  }
+
+  .kicker {
+    display: block;
+    margin-bottom: 2cqi;
+    font-family: var(--font-mono);
+    font-size: 1.2cqi;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  .h {
+    margin: 0;
+    font-size: 5.6cqi;
+    font-weight: 500;
+    font-stretch: 82%;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+  }
+
+  .p {
+    max-width: 30ch;
+    margin: 2.4cqi 0 3.2cqi;
+    font-size: 1.55cqi;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .ctas {
+    display: flex;
+    align-items: center;
+    gap: 2.4cqi;
+  }
+
+  .more {
+    font-size: 1.4cqi;
+    font-weight: 600;
+    border-bottom: 1px solid currentColor;
+  }
+
+  .art {
+    position: relative;
+    aspect-ratio: 600 / 440;
+    overflow: hidden;
+  }
+
+  .art svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .badge {
+    position: absolute;
+    left: 2.4cqi;
+    bottom: 2.4cqi;
+    padding: 1.2cqi 1.8cqi;
+    background: rgb(239 237 232 / 0.94);
+    font-size: 1.2cqi;
+    color: var(--muted);
+  }
+
+  .badge b {
+    display: block;
+    margin-bottom: 0.3cqi;
+    color: var(--ink);
+    font-size: 1.35cqi;
+  }
+
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 4cqi;
+    border-top: 1px solid rgb(31 29 26 / 0.12);
+  }
+
+  .strip span {
+    display: grid;
+    gap: 0.6cqi;
+    padding: 2.4cqi 2cqi 0 0;
+    font-size: 1.3cqi;
+    color: var(--muted);
+  }
+
+  .strip span + span {
+    padding-left: 2cqi;
+    border-left: 1px solid rgb(31 29 26 / 0.12);
+  }
+
+  .strip b {
+    color: var(--ink);
+    font-size: 1.7cqi;
+    font-weight: 600;
+  }
+
+  /* Mobile layout (phone frame) */
+  @container (max-width: 520px) {
+    .mk {
+      padding: 13cqi 6cqi 6cqi;
+    }
+
+    .nav {
+      padding-bottom: 4cqi;
+    }
+
+    .logo {
+      font-size: 4cqi;
+    }
+
+    .links,
+    .nav .btn {
+      display: none;
+    }
+
+    .burger {
+      display: grid;
+      gap: 1.6cqi;
+      width: 6cqi;
+    }
+
+    .burger i {
+      height: 0.6cqi;
+      background: var(--ink);
+    }
+
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 6cqi;
+      padding-top: 6cqi;
+    }
+
+    .copy {
+      order: 2;
+    }
+
+    .kicker {
+      font-size: 3cqi;
+      margin-bottom: 3cqi;
+    }
+
+    .h {
+      font-size: 12.5cqi;
+    }
+
+    .p {
+      font-size: 4.1cqi;
+      margin: 4cqi 0 5cqi;
+    }
+
+    .ctas .btn {
+      font-size: 3.6cqi;
+      padding: 3cqi 4.6cqi;
+    }
+
+    .more {
+      font-size: 3.6cqi;
+    }
+
+    .badge {
+      font-size: 2.8cqi;
+      left: 3cqi;
+      bottom: 3cqi;
+      padding: 2cqi 3cqi;
+    }
+
+    .badge b {
+      font-size: 3.2cqi;
+    }
+
+    .strip {
+      grid-template-columns: 1fr;
+      margin-top: 7cqi;
+    }
+
+    .strip span,
+    .strip span + span {
+      padding: 3.6cqi 0;
+      border-left: 0;
+      border-bottom: 1px solid rgb(31 29 26 / 0.12);
+      font-size: 3.4cqi;
+    }
+
+    .strip b {
+      font-size: 4.2cqi;
+    }
+  }
+</style>

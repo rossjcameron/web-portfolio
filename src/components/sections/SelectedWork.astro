@@ -1,0 +1,246 @@
+---
+import SectionLabel from '../SectionLabel.astro'
+import BrowserWindow from '../BrowserWindow.astro'
+import Button from '../Button.astro'
+import Icon from '../Icon.astro'
+import { projects } from '../../data/projects'
+import { mockups } from '../mockups'
+
+interface Props {
+  index?: string
+  showHeading?: boolean
+}
+const { index = '02', showHeading = true } = Astro.props
+const Name = showHeading ? 'h3' : 'h2'
+---
+
+<section class="work" aria-labelledby={showHeading ? 'work-title' : undefined} aria-label={showHeading ? undefined : 'Projects'}>
+  <div class="shell">
+    {
+      showHeading && (
+        <div class="work__head">
+          <SectionLabel index={index}>Selected work</SectionLabel>
+          <h2 id="work-title" class="work__title" data-reveal>
+            A closer look at what we build.
+          </h2>
+          <p class="work__note" data-reveal style="--reveal-delay: 80ms">
+            Our launch portfolio is made up of concept projects, designed for the kinds of businesses we work with. Each
+            one is clearly labelled as a concept.
+          </p>
+        </div>
+      )
+    }
+
+    <div class="work__list">
+      {
+        projects.map((project, i) => {
+          const Mock = mockups[project.slug as keyof typeof mockups].component
+          const tone = mockups[project.slug as keyof typeof mockups].tone
+          return (
+            <article class:list={['showcase', i % 2 === 1 && 'showcase--flip']} data-reveal>
+              <a href={`/work/${project.slug}/`} class="showcase__media" tabindex="-1" aria-hidden="true">
+                <BrowserWindow title={project.name} tone={tone}>
+                  <Mock />
+                </BrowserWindow>
+              </a>
+              <div class="showcase__meta">
+                <span class="showcase__tag">Concept project</span>
+                <Name class="showcase__name">
+                  <a href={`/work/${project.slug}/`}>{project.name}</a>
+                </Name>
+                <dl>
+                  <div>
+                    <dt>Industry</dt>
+                    <dd>{project.industry}</dd>
+                  </div>
+                  <div>
+                    <dt>Website</dt>
+                    <dd>{project.type}</dd>
+                  </div>
+                </dl>
+                <p>{project.summary}</p>
+                <a href={`/work/${project.slug}/`} class="link-arrow">
+                  View the concept<span class="sr-only"> for {project.name}</span> <Icon name="arrow-right" size={16} />
+                </a>
+              </div>
+            </article>
+          )
+        })
+      }
+    </div>
+
+    {
+      showHeading && (
+        <div class="work__more">
+          <Button href="/work/" variant="secondary" arrow>
+            Explore our work
+          </Button>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .work {
+    padding-block: clamp(4rem, 9vw, 7rem);
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .work__head {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 1.75rem;
+    margin-bottom: clamp(3rem, 7vw, 5.5rem);
+  }
+
+  .work__head > :global(.section-label) {
+    grid-column: 1 / -1;
+  }
+
+  .work__title {
+    grid-column: 1 / span 7;
+    font-size: var(--text-headline);
+    line-height: var(--text-headline--line-height);
+    letter-spacing: var(--text-headline--letter-spacing);
+    font-stretch: 94%;
+  }
+
+  .work__note {
+    grid-column: 9 / -1;
+    align-self: end;
+    color: var(--color-slate);
+  }
+
+  @media (max-width: 1023px) {
+    .work__title,
+    .work__note {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .work__list {
+    display: grid;
+    gap: clamp(4rem, 9vw, 7.5rem);
+  }
+
+  .showcase {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 2rem;
+    align-items: center;
+  }
+
+  .showcase__media {
+    grid-column: 1 / span 8;
+    display: block;
+    padding: clamp(1rem, 3vw, 2.5rem);
+    background: var(--color-stone);
+    transition: background-color 0.4s;
+  }
+
+  .showcase--flip .showcase__media {
+    grid-column: 5 / -1;
+    grid-row: 1;
+  }
+
+  .showcase__media :global(.bw) {
+    transition:
+      transform 0.45s var(--ease-out-soft),
+      box-shadow 0.45s var(--ease-out-soft);
+  }
+
+  .showcase:hover .showcase__media :global(.bw) {
+    transform: translateY(-6px);
+    box-shadow:
+      0 0 0 1px rgb(23 32 38 / 0.1),
+      0 40px 80px -30px rgb(23 32 38 / 0.4);
+  }
+
+  .showcase:hover .showcase__media {
+    background: var(--color-mint);
+  }
+
+  .showcase__meta {
+    grid-column: 10 / -1;
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+  }
+
+  .showcase--flip .showcase__meta {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+  }
+
+  .showcase__tag {
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--color-rule);
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+  }
+
+  .showcase__name {
+    font-size: var(--text-title);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .showcase__name a {
+    text-decoration: none;
+  }
+
+  .showcase__meta dl {
+    display: grid;
+    gap: 0.5rem;
+    width: 100%;
+    padding-block: 0.9rem;
+    border-block: 1px solid var(--color-rule);
+    font-size: 0.92rem;
+  }
+
+  .showcase__meta dl div {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.75rem;
+  }
+
+  .showcase__meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+    padding-top: 0.15rem;
+  }
+
+  .showcase__meta p {
+    color: var(--color-slate);
+  }
+
+  @media (max-width: 1023px) {
+    .showcase__media,
+    .showcase--flip .showcase__media,
+    .showcase__meta,
+    .showcase--flip .showcase__meta {
+      grid-column: 1 / -1;
+      grid-row: auto;
+    }
+
+    .showcase__meta {
+      max-width: 36rem;
+    }
+  }
+
+  .work__more {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(3.5rem, 7vw, 5rem);
+  }
+</style>

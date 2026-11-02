@@ -1,0 +1,167 @@
+---
+import SectionLabel from '../SectionLabel.astro'
+import { faq } from '../../data/faq'
+
+interface Props {
+  index?: string
+}
+const { index = '07' } = Astro.props
+---
+
+<section class="faq surface-stone" aria-labelledby="faq-title">
+  <div class="shell faq__inner">
+    <div class="faq__head">
+      <SectionLabel index={index}>Questions</SectionLabel>
+      <h2 id="faq-title">Questions, answered.</h2>
+      <p>Can’t see what you’re looking for? <a href="/contact/">Ask us directly</a> and we’ll get back to you.</p>
+    </div>
+    <div class="faq__list">
+      {
+        faq.map((item) => (
+          <details name="faq">
+            <summary>
+              <span>{item.q}</span>
+              <span class="faq__icon" aria-hidden="true" />
+            </summary>
+            <p>{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    padding-block: clamp(4.5rem, 9vw, 7rem);
+    background: var(--color-stone);
+  }
+
+  .faq__inner {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 2.5rem;
+  }
+
+  .faq__head {
+    grid-column: 1 / span 4;
+    display: grid;
+    align-content: start;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 1024px) {
+    .faq__head {
+      position: sticky;
+      top: 7rem;
+      align-self: start;
+    }
+  }
+
+  .faq__head h2 {
+    font-size: var(--text-headline);
+    line-height: var(--text-headline--line-height);
+    letter-spacing: var(--text-headline--letter-spacing);
+    font-stretch: 94%;
+  }
+
+  .faq__head p {
+    color: var(--color-slate);
+  }
+
+  .faq__head a {
+    color: var(--color-ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--color-sea);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .faq__list {
+    grid-column: 6 / -1;
+    border-top: 1px solid var(--color-ink);
+  }
+
+  @media (max-width: 1023px) {
+    .faq__head,
+    .faq__list {
+      grid-column: 1 / -1;
+    }
+  }
+
+  details {
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.35rem;
+    font-size: 1.12rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__icon {
+    position: relative;
+    flex: none;
+    width: 1.75rem;
+    height: 1.75rem;
+    border: 1px solid var(--color-rule);
+    border-radius: 50%;
+    transition:
+      background-color 0.2s,
+      border-color 0.2s;
+  }
+
+  .faq__icon::before,
+  .faq__icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 1.5px;
+    background: var(--color-ink);
+    translate: -50% -50%;
+    transition: rotate 0.25s var(--ease-out-soft);
+  }
+
+  .faq__icon::after {
+    rotate: 90deg;
+  }
+
+  details[open] .faq__icon {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+  }
+
+  details[open] .faq__icon::before,
+  details[open] .faq__icon::after {
+    background: var(--color-paper);
+  }
+
+  details[open] .faq__icon::after {
+    rotate: 0deg;
+  }
+
+  summary:hover .faq__icon {
+    border-color: var(--color-ink);
+  }
+
+  details p {
+    max-width: 60ch;
+    padding-bottom: 1.5rem;
+    color: var(--color-slate);
+  }
+</style>

@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import PageHeader from '../../components/PageHeader.astro'
+import Button from '../../components/Button.astro'
+---
+
+<BaseLayout title="Enquiry sent" description="Thanks for your enquiry to New Window Web Design." noindex>
+  <PageHeader
+    eyebrow="Enquiry sent"
+    title="Thanks, your enquiry has been sent."
+    lede="We’ll read it carefully and reply by email with the next steps."
+  >
+    <div><Button href="/work/" variant="secondary" arrow>Explore our work</Button></div>
+  </PageHeader>
+</BaseLayout>

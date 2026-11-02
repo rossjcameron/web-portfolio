@@ -1,0 +1,126 @@
+---
+import SectionLabel from '../SectionLabel.astro'
+import PaneGlyph from '../PaneGlyph.astro'
+
+const principles = [
+  { title: 'Designed properly.', text: 'Thoughtful layouts, clear branding and attention to detail.' },
+  { title: 'Built to perform.', text: 'Responsive design, fast loading and straightforward navigation.' },
+  { title: 'Priced sensibly.', text: 'Professional websites without unnecessary agency overheads.' },
+] as const
+---
+
+<section class="intro" aria-labelledby="intro-title">
+  <div class="shell">
+    <div class="intro__head">
+      <SectionLabel index="01">Why it matters</SectionLabel>
+      <h2 id="intro-title" class="intro__title" data-reveal>
+        Your website should work as hard as <span class="mark">you do.</span>
+      </h2>
+      <div class="intro__copy" data-reveal style="--reveal-delay: 80ms">
+        <p>
+          Most customers look you up before they get in touch. A professional website helps them understand what you do,
+          find the service they need and contact you with confidence.
+        </p>
+        <p>We design websites that do that job well, so you can get on with yours.</p>
+      </div>
+    </div>
+
+    <ol class="principles">
+      {
+        principles.map((item, i) => (
+          <li data-reveal style={`--reveal-delay: ${i * 90}ms`}>
+            <PaneGlyph pane={([0, 1, 3] as const)[i]!} />
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .intro {
+    padding-block: clamp(5rem, 11vw, 9rem) clamp(4rem, 9vw, 7rem);
+  }
+
+  .intro__head {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 1.75rem;
+  }
+
+  .intro__head > :global(.section-label) {
+    grid-column: 1 / -1;
+  }
+
+  .intro__title {
+    grid-column: 1 / span 7;
+    font-size: var(--text-headline);
+    line-height: var(--text-headline--line-height);
+    letter-spacing: var(--text-headline--letter-spacing);
+    font-stretch: 94%;
+  }
+
+  .intro__copy {
+    grid-column: 9 / -1;
+    align-self: end;
+    display: grid;
+    gap: 1rem;
+    color: var(--color-slate);
+  }
+
+  .intro__copy p:first-child {
+    color: var(--color-ink);
+    font-size: 1.15rem;
+  }
+
+  @media (max-width: 1023px) {
+    .intro__title,
+    .intro__copy {
+      grid-column: 1 / -1;
+    }
+
+    .intro__copy {
+      max-width: 40rem;
+    }
+  }
+
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    margin-top: clamp(3.5rem, 7vw, 6rem);
+  }
+
+  .principles li {
+    display: grid;
+    align-content: start;
+    gap: 0.6rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-ink);
+  }
+
+  .principles :global(.pane-glyph) {
+    margin-bottom: 0.9rem;
+    color: var(--color-ink);
+  }
+
+  .principles h3 {
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+  }
+
+  .principles p {
+    max-width: 30ch;
+    color: var(--color-slate);
+  }
+
+  @media (max-width: 767px) {
+    .principles {
+      grid-template-columns: 1fr;
+      row-gap: 2.5rem;
+    }
+  }
+</style>

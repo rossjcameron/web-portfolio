@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PageHeader from '../components/PageHeader.astro'
+import PaneGlyph from '../components/PaneGlyph.astro'
+import Icon from '../components/Icon.astro'
+import Button from '../components/Button.astro'
+import FinalCta from '../components/sections/FinalCta.astro'
+import { care } from '../data/pricing'
+
+const services = [
+  {
+    id: 'design',
+    title: 'Website Design',
+    intro:
+      'Every website starts with your business and your customers. We plan the structure around the questions customers actually ask, then create a clean, distinctive design that suits your brand.',
+    who: 'Small businesses, tradespeople and service providers who need a professional website, whether you’re starting from scratch or replacing an outdated one.',
+    gets: [
+      'A clear page structure planned around your services',
+      'A bespoke design within a consistent design system',
+      'Layouts designed for phones first, then larger screens',
+      'Clear calls to action and simple routes to contact you',
+      'Revision rounds as set out in your package',
+    ],
+    not: ['Logo design or a full brand identity', 'Professional photography', 'Writing all of your website copy from scratch'],
+  },
+  {
+    id: 'development',
+    title: 'Website Development',
+    intro:
+      'We build your website with modern, lightweight technology, so it loads quickly, works on every device and is straightforward to look after.',
+    who: 'Any business that wants a website that is fast, reliable and works properly on mobile.',
+    gets: [
+      'A responsive build, tested on phones, tablets and desktops',
+      'Fast-loading pages with optimised images',
+      'Contact form and click-to-call',
+      'Basic on-page SEO: page titles, descriptions, headings and a sitemap',
+      'Domain connection',
+      'Analytics set-up with the Business Website package',
+    ],
+    not: ['Online shops, booking systems or custom integrations', 'Advanced SEO campaigns', 'Domain registration fees and third-party subscriptions'],
+  },
+  {
+    id: 'care',
+    title: 'Website Care',
+    intro: `An optional monthly plan that keeps your website hosted, monitored and up to date, from £${care.price} a month.`,
+    who: 'Businesses that would rather not think about hosting, updates or small changes.',
+    gets: care.includes,
+    not: ['Unlimited changes or new pages', 'Redesigns or new features', 'Third-party subscriptions'],
+  },
+] as const
+---
+
+<BaseLayout
+  title="Services"
+  description="Website design, development and optional website care for UK small businesses. Clear scope, fixed quotes and websites from £299."
+>
+  <PageHeader
+    eyebrow="Services"
+    title="Professional websites, without the unnecessary complexity."
+    lede="Three clear services, each with a defined scope. You’ll always know what’s included before any work begins."
+  />
+
+  <div class="shell services-detail">
+    {
+      services.map((service, i) => (
+        <section class="svc" id={service.id} aria-labelledby={`${service.id}-title`}>
+          <div class="svc__intro">
+            <PaneGlyph pane={([0, 1, 3] as const)[i]!} />
+            <h2 id={`${service.id}-title`}>{service.title}</h2>
+            <p>{service.intro}</p>
+          </div>
+          <div class="svc__detail">
+            <div>
+              <h3>Who it’s for</h3>
+              <p>{service.who}</p>
+            </div>
+            <div>
+              <h3>What you get</h3>
+              <ul class="ticks">
+                {service.gets.map((item) => (
+                  <li>
+                    <Icon name="check" size={18} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3>Not included as standard</h3>
+              <ul class="dashes">
+                {service.not.map((item) => (
+                  <li>
+                    <Icon name="minus" size={16} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p class="svc__note">Anything outside the standard scope can be quoted separately.</p>
+            </div>
+          </div>
+        </section>
+      ))
+    }
+
+    <div class="services-detail__foot">
+      <p>Starter Websites start from £299 and Business Websites from £499.</p>
+      <Button href="/pricing/" variant="secondary" arrow>View pricing</Button>
+    </div>
+  </div>
+
+  <FinalCta />
+</BaseLayout>
+
+<style>
+  .services-detail {
+    padding-block: clamp(2rem, 5vw, 3rem) clamp(4rem, 9vw, 7rem);
+  }
+
+  .svc {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 2rem;
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .svc__intro {
+    grid-column: 1 / span 5;
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+  }
+
+  .svc__intro h2 {
+    font-size: var(--text-title);
+    letter-spacing: -0.03em;
+  }
+
+  .svc__intro p {
+    max-width: 40ch;
+    color: var(--color-slate);
+    font-size: 1.1rem;
+  }
+
+  .svc__detail {
+    grid-column: 7 / -1;
+    display: grid;
+    gap: 2rem;
+  }
+
+  .svc__detail h3 {
+    margin-bottom: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+  }
+
+  .ticks,
+  .dashes {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .ticks li,
+  .dashes li {
+    display: flex;
+    gap: 0.7rem;
+  }
+
+  .ticks :global(svg) {
+    flex: none;
+    margin-top: 0.25rem;
+    color: #3f8f92;
+  }
+
+  .dashes :global(svg) {
+    flex: none;
+    margin-top: 0.3rem;
+    color: var(--color-slate);
+  }
+
+  .svc__note {
+    margin-top: 0.75rem;
+    font-size: 0.92rem;
+    color: var(--color-slate);
+  }
+
+  @media (max-width: 1023px) {
+    .svc__intro,
+    .svc__detail {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .services-detail__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding-top: 3rem;
+    font-size: 1.15rem;
+  }
+</style>

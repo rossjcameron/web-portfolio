@@ -1,0 +1,114 @@
+---
+import Icon from './Icon.astro'
+
+interface Props {
+  title: string
+  tone?: 'light' | 'dark'
+  class?: string
+}
+const { title, tone = 'light', class: className } = Astro.props
+---
+
+<figure class:list={['bw', `bw--${tone}`, className]}>
+  <div class="bw__bar" aria-hidden="true">
+    <span class="bw__dots"><i></i><i></i><i></i></span>
+    <span class="bw__address"><Icon name="lock" size={12} />{title} · concept</span>
+    <span class="bw__spacer"></span>
+  </div>
+  <div class="bw__view" role="img" aria-label={`Concept website design for ${title}, a fictional business`}>
+    <slot />
+  </div>
+</figure>
+
+<style>
+  .bw {
+    margin: 0;
+    overflow: hidden;
+    border-radius: var(--radius-frame);
+    background: #fff;
+    box-shadow:
+      0 0 0 1px rgb(23 32 38 / 0.1),
+      0 2px 4px rgb(23 32 38 / 0.04),
+      0 30px 60px -24px rgb(23 32 38 / 0.28);
+  }
+
+  .bw--dark {
+    background: #0e1012;
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.08),
+      0 30px 70px -24px rgb(0 0 0 / 0.6);
+  }
+
+  .bw__bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    height: 2.4rem;
+    padding-inline: 0.9rem;
+    border-bottom: 1px solid rgb(23 32 38 / 0.08);
+    background: #f1f2ef;
+    color: #555f66;
+  }
+
+  .bw--dark .bw__bar {
+    border-bottom-color: rgb(255 255 255 / 0.06);
+    background: #1a1d20;
+    color: #8b9399;
+  }
+
+  .bw__dots {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .bw__dots i {
+    width: 0.62rem;
+    height: 0.62rem;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.35;
+  }
+
+  .bw__address {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 0;
+    max-width: 22rem;
+    padding: 0.28rem 1.1rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgb(23 32 38 / 0.05);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .bw--dark .bw__address {
+    background: rgb(255 255 255 / 0.06);
+  }
+
+  .bw__view {
+    position: relative;
+  }
+
+  @media (max-width: 520px) {
+    .bw__bar {
+      height: 1.9rem;
+      grid-template-columns: auto 1fr;
+    }
+
+    .bw__spacer {
+      display: none;
+    }
+
+    .bw__address {
+      justify-self: end;
+      font-size: 0.6rem;
+      padding: 0.2rem 0.7rem;
+    }
+  }
+</style>

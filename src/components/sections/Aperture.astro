@@ -1,0 +1,197 @@
+---
+import SectionLabel from '../SectionLabel.astro'
+import BrowserWindow from '../BrowserWindow.astro'
+import MockLustre from '../mockups/MockLustre.astro'
+---
+
+<section class="aperture on-dark" aria-labelledby="aperture-title" data-aperture>
+  <div class="aperture__pin" data-aperture-pin>
+    <div class="shell aperture__head">
+      <SectionLabel index="04">The New Window approach</SectionLabel>
+      <h2 id="aperture-title">A fresh perspective on your online presence.</h2>
+      <p>
+        We look at your business the way your customers do, then design every page to make it clearer, more credible and
+        easier to contact.
+      </p>
+    </div>
+
+    <div class="shell">
+      <div class="aperture__window" data-aperture-window>
+        <div class="aperture__scene" data-aperture-scene>
+          <BrowserWindow title="Lustre Auto Care" tone="dark">
+            <MockLustre />
+          </BrowserWindow>
+        </div>
+        <div class="aperture__mullions" data-aperture-mullions aria-hidden="true"><i></i><i></i></div>
+      </div>
+      <p class="aperture__caption" data-aperture-caption>
+        <span>Concept</span> One-page website for a fictional mobile detailing business
+        <a href="/work/lustre-auto-care/" class="link-arrow">View the concept</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .aperture {
+    background:
+      radial-gradient(70% 50% at 50% 100%, rgb(121 191 193 / 0.12), transparent 70%),
+      var(--color-midnight);
+    color: var(--color-paper);
+    padding-block: clamp(4.5rem, 9vw, 7rem);
+  }
+
+  .aperture__head {
+    display: grid;
+    justify-items: center;
+    gap: 1.25rem;
+    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+    text-align: center;
+  }
+
+  .aperture__head h2 {
+    max-width: 18ch;
+    font-size: var(--text-headline);
+    line-height: var(--text-headline--line-height);
+    letter-spacing: var(--text-headline--letter-spacing);
+    font-stretch: 94%;
+  }
+
+  .aperture__head p {
+    max-width: 46ch;
+    color: var(--color-mist);
+  }
+
+  .aperture__window {
+    position: relative;
+    max-width: 1120px;
+    margin-inline: auto;
+  }
+
+  .aperture__mullions {
+    display: none;
+  }
+
+  .aperture__caption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    margin-top: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-mist);
+  }
+
+  .aperture__caption span {
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--color-rule-dark);
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .aperture__caption .link-arrow {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--color-paper);
+  }
+
+  /* Enhanced (desktop, motion allowed): pinned, the window opens as you scroll */
+  .aperture.is-enhanced {
+    padding-block: 0;
+  }
+
+  .aperture.is-enhanced .aperture__pin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100svh;
+    padding-block: 7rem 1.5rem;
+  }
+
+  .aperture.is-enhanced .aperture__head {
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .aperture.is-enhanced .aperture__window {
+    width: min(100%, calc((100svh - 25rem) * 1.6));
+    aspect-ratio: 1.6;
+    overflow: hidden;
+    border-radius: var(--radius-frame);
+    clip-path: inset(30% 35% 30% 35% round 6px);
+    will-change: clip-path;
+  }
+
+  .aperture.is-enhanced .aperture__scene {
+    transform-origin: 50% 50%;
+  }
+
+  .aperture.is-enhanced .aperture__mullions {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .aperture__mullions i {
+    position: absolute;
+    background: var(--color-midnight);
+  }
+
+  .aperture__mullions i:first-child {
+    top: 0;
+    bottom: 0;
+    left: calc(50% - 4px);
+    width: 8px;
+  }
+
+  .aperture__mullions i:last-child {
+    left: 0;
+    right: 0;
+    top: calc(50% - 4px);
+    height: 8px;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap'
+  import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  const section = document.querySelector<HTMLElement>('[data-aperture]')
+
+  if (section) {
+    const mm = gsap.matchMedia()
+    mm.add('(min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference)', () => {
+      section.classList.add('is-enhanced')
+
+      const tl = gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: '+=110%',
+          pin: section.querySelector('[data-aperture-pin]'),
+          scrub: 0.6,
+          anticipatePin: 1,
+        },
+      })
+
+      tl.fromTo(
+        '[data-aperture-window]',
+        { clipPath: 'inset(30% 35% 30% 35% round 6px)' },
+        { clipPath: 'inset(0% 0% 0% 0% round 14px)', ease: 'power2.inOut', duration: 1 },
+        0,
+      )
+        .fromTo('[data-aperture-scene]', { scale: 1.3 }, { scale: 1, ease: 'power2.inOut', duration: 1 }, 0)
+        .fromTo('[data-aperture-mullions] i', { opacity: 1 }, { opacity: 0, duration: 0.45 }, 0.1)
+        .fromTo('[data-aperture-caption]', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.2 }, 0.85)
+
+      return () => section.classList.remove('is-enhanced')
+    })
+  }
+</script>

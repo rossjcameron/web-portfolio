@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PageHeader from '../components/PageHeader.astro'
+import PaneGlyph from '../components/PaneGlyph.astro'
+import FinalCta from '../components/sections/FinalCta.astro'
+
+const values = [
+  { title: 'Plain English', text: 'No jargon and no hard sell. We explain what we recommend and why.' },
+  { title: 'Fixed quotes', text: 'You’ll know the price and what’s included before any work begins.' },
+  { title: 'Design with a purpose', text: 'Every layout decision is about helping customers understand you and get in touch.' },
+  { title: 'Built properly', text: 'Fast, accessible and responsive websites that are straightforward to look after.' },
+] as const
+---
+
+<BaseLayout
+  title="About"
+  description="New Window is an independent UK web design and development studio creating carefully designed, sensibly priced websites for small businesses."
+>
+  <PageHeader
+    eyebrow="About"
+    title="An independent studio for businesses that deserve a better website."
+    lede="New Window designs and builds websites for UK small businesses, tradespeople and growing companies."
+  />
+
+  <section class="story" aria-labelledby="story-title">
+    <div class="shell story__grid">
+      <h2 id="story-title">Why New Window exists</h2>
+      <div class="story__copy">
+        <p class="story__lead">
+          Too many good businesses are let down by their websites. Agency projects can cost thousands, while do-it-yourself
+          builders take time that most business owners simply don’t have.
+        </p>
+        <p>
+          New Window sits in between. We create carefully designed, properly built websites at prices that make sense for
+          smaller businesses, and we keep the process simple: a clear quote, a defined scope and a website you’re proud to
+          send customers to.
+        </p>
+        <p>
+          We care about the details that make a website feel professional, such as typography, layout, speed and how easily
+          someone can get in touch. Those details are what turn a visitor into an enquiry.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="values surface-stone" aria-labelledby="values-title">
+    <div class="shell">
+      <h2 id="values-title" class="eyebrow">How we work</h2>
+      <ul class="values__grid">
+        {
+          values.map((value, i) => (
+            <li data-reveal style={`--reveal-delay: ${i * 80}ms`}>
+              <PaneGlyph pane={([0, 1, 2, 3] as const)[i]!} />
+              <h3>{value.title}</h3>
+              <p>{value.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <FinalCta />
+</BaseLayout>
+
+<style>
+  .story {
+    padding-block: clamp(4rem, 8vw, 6.5rem);
+  }
+
+  .story__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 1.5rem;
+  }
+
+  .story h2 {
+    grid-column: 1 / span 4;
+    font-size: var(--text-title);
+    letter-spacing: -0.03em;
+  }
+
+  .story__copy {
+    grid-column: 6 / span 7;
+    display: grid;
+    gap: 1.25rem;
+    max-width: 62ch;
+    color: var(--color-slate);
+  }
+
+  .story__lead {
+    color: var(--color-ink);
+    font-size: var(--text-lead);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1023px) {
+    .story h2,
+    .story__copy {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .values {
+    padding-block: clamp(3.5rem, 7vw, 5.5rem);
+    background: var(--color-stone);
+  }
+
+  .values__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 2.5rem;
+    margin-top: 2rem;
+  }
+
+  .values__grid li {
+    display: grid;
+    align-content: start;
+    gap: 0.6rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-ink);
+  }
+
+  .values__grid :global(.pane-glyph) {
+    margin-bottom: 0.6rem;
+  }
+
+  .values__grid h3 {
+    font-size: 1.2rem;
+  }
+
+  .values__grid p {
+    color: var(--color-slate);
+  }
+
+  @media (max-width: 1023px) {
+    .values__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 599px) {
+    .values__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,347 @@
+---
+import SectionLabel from '../SectionLabel.astro'
+import Button from '../Button.astro'
+import Icon from '../Icon.astro'
+import { packages, care, exclusions } from '../../data/pricing'
+
+interface Props {
+  index?: string
+  /** Homepage shows a link to the full pricing page; the pricing page shows the full exclusions list */
+  variant?: 'home' | 'full'
+  headingLevel?: 'h1' | 'h2'
+}
+const { index = '05', variant = 'home', headingLevel = 'h2' } = Astro.props
+const Heading = headingLevel
+const Sub = headingLevel === 'h1' ? 'h2' : 'h3'
+---
+
+<section class="pricing" id="pricing" aria-labelledby="pricing-title">
+  <div class="shell">
+    <div class="pricing__head">
+      <SectionLabel index={index}>Pricing</SectionLabel>
+      <Heading id="pricing-title" class="pricing__title" data-reveal>Good websites. Straightforward pricing.</Heading>
+      <p class="pricing__intro" data-reveal style="--reveal-delay: 80ms">
+        Clear starting prices, and a fixed quote agreed before any work begins. No hourly billing and no surprises.
+      </p>
+    </div>
+
+    <div class="plans" data-reveal>
+      {
+        packages.map((pkg) => (
+          <article class="plan" aria-labelledby={`plan-${pkg.id}`}>
+            <Sub id={`plan-${pkg.id}`} class="plan__name">{pkg.name}</Sub>
+            <p class="plan__price">
+              <span class="plan__from">From</span>£{pkg.price}
+            </p>
+            <p class="plan__summary">{pkg.summary}</p>
+            <ul class="plan__list">
+              {pkg.includes.map((item) => (
+                <li>
+                  <Icon name="check" size={18} />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <Button href={`/contact/?service=${pkg.id}`} variant={pkg.id === 'business' ? 'primary' : 'secondary'} arrow>
+              Enquire about this package
+            </Button>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="care surface-stone" data-reveal>
+      <div class="care__intro">
+        <Sub class="care__name">{care.name} <span>Optional</span></Sub>
+        <p class="care__price"><span class="plan__from">From</span>£{care.price}<small>/month</small></p>
+      </div>
+      <div class="care__body">
+        <p>{care.summary}</p>
+        <ul>
+          {care.includes.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <a href={`/contact/?service=care`} class="link-arrow care__link">
+        Enquire about Website Care <Icon name="arrow-right" size={16} />
+      </a>
+    </div>
+
+    {
+      variant === 'full' ? (
+        <div class="exclusions" data-reveal>
+          <Sub class="exclusions__title">Not included as standard</Sub>
+          <p>These can be quoted separately or arranged by you. We’ll always tell you about any third-party costs before you commit.</p>
+          <ul>
+            {exclusions.map((item) => (
+              <li>
+                <Icon name="minus" size={16} />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <p class="pricing__foot" data-reveal>
+          Domain registration, third-party subscriptions and custom functionality are not included as standard.
+          <a href="/pricing/" class="link-arrow">
+            Full pricing details <Icon name="arrow-right" size={16} />
+          </a>
+        </p>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .pricing {
+    padding-block: clamp(4.5rem, 9vw, 7rem);
+  }
+
+  .pricing__head {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 1.75rem;
+    margin-bottom: clamp(2.75rem, 6vw, 4rem);
+  }
+
+  .pricing__head > :global(.section-label) {
+    grid-column: 1 / -1;
+  }
+
+  .pricing__title {
+    grid-column: 1 / span 7;
+    font-size: var(--text-headline);
+    line-height: var(--text-headline--line-height);
+    letter-spacing: var(--text-headline--letter-spacing);
+    font-stretch: 94%;
+  }
+
+  .pricing__intro {
+    grid-column: 9 / -1;
+    align-self: end;
+    color: var(--color-slate);
+  }
+
+  @media (max-width: 1023px) {
+    .pricing__title,
+    .pricing__intro {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border: 1px solid var(--color-ink);
+  }
+
+  .plan {
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto;
+    gap: 1.1rem;
+    justify-items: start;
+    padding: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .plan + .plan {
+    border-left: 1px solid var(--color-ink);
+    background: #fff;
+  }
+
+  .plan__name {
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+  }
+
+  .plan__price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-size: clamp(3rem, 2.2rem + 3vw, 4.75rem);
+    font-weight: 600;
+    font-stretch: 88%;
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+
+  .plan__from {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+  }
+
+  .plan__summary {
+    max-width: 38ch;
+    color: var(--color-slate);
+  }
+
+  .plan__list {
+    display: grid;
+    align-content: start;
+    gap: 0.7rem;
+    width: 100%;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .plan__list li {
+    display: flex;
+    gap: 0.7rem;
+  }
+
+  .plan__list :global(svg) {
+    flex: none;
+    margin-top: 0.25rem;
+    color: #3f8f92;
+  }
+
+  .plan :global(.btn) {
+    margin-top: 0.75rem;
+  }
+
+  @media (max-width: 767px) {
+    .plans {
+      grid-template-columns: 1fr;
+    }
+
+    .plan + .plan {
+      border-left: 0;
+      border-top: 1px solid var(--color-ink);
+    }
+  }
+
+  .care {
+    display: grid;
+    grid-template-columns: 4fr 6fr auto;
+    gap: 1.5rem clamp(1.5rem, 4vw, 3rem);
+    align-items: start;
+    padding: clamp(1.75rem, 4vw, 2.5rem) clamp(1.75rem, 4vw, 3rem);
+    border: 1px solid var(--color-ink);
+    border-top: 0;
+    background: var(--color-stone);
+  }
+
+  .care__name {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.3rem;
+  }
+
+  .care__name span {
+    padding: 0.1rem 0.45rem;
+    border: 1px solid var(--color-rule);
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+  }
+
+  .care__price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+    font-size: 2.25rem;
+    font-weight: 600;
+    font-stretch: 88%;
+    letter-spacing: -0.04em;
+  }
+
+  .care__price small {
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--color-slate);
+  }
+
+  .care__body {
+    display: grid;
+    gap: 0.9rem;
+    color: var(--color-slate);
+  }
+
+  .care__body ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .care__body li {
+    padding: 0.25rem 0.7rem;
+    border: 1px solid var(--color-rule);
+    border-radius: 999px;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-size: 0.88rem;
+  }
+
+  .care__link {
+    align-self: end;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 1023px) {
+    .care {
+      grid-template-columns: 1fr;
+    }
+
+    .care__link {
+      justify-self: start;
+    }
+  }
+
+  .pricing__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1.25rem;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    color: var(--color-slate);
+  }
+
+  .pricing__foot .link-arrow {
+    color: var(--color-ink);
+  }
+
+  .exclusions {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+    max-width: 52rem;
+  }
+
+  .exclusions__title {
+    font-size: 1.2rem;
+  }
+
+  .exclusions p {
+    color: var(--color-slate);
+  }
+
+  .exclusions ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 0.6rem 2rem;
+    margin-top: 0.5rem;
+  }
+
+  .exclusions li {
+    display: flex;
+    gap: 0.6rem;
+  }
+
+  .exclusions :global(svg) {
+    flex: none;
+    margin-top: 0.3rem;
+    color: var(--color-slate);
+  }
+</style>

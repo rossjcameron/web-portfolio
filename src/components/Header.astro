@@ -1,0 +1,236 @@
+---
+import Wordmark from './Wordmark.astro'
+import Button from './Button.astro'
+import Icon from './Icon.astro'
+import { nav, site } from '../data/site'
+
+const path = Astro.url.pathname
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href))
+---
+
+<header class="site-header" data-header>
+  <div class="shell site-header__row">
+    <a href="/" class="site-header__brand" aria-label={`${site.name}, home`}>
+      <Wordmark />
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <Button href="/contact/" size="sm" class="site-header__cta">Get a quote</Button>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-panel" data-menu-open>
+      <span class="sr-only">Open menu</span>
+      <Icon name="menu" size={22} />
+    </button>
+  </div>
+</header>
+
+<div class="menu-panel on-dark" id="menu-panel" role="dialog" aria-modal="true" aria-label="Menu" hidden data-menu-panel>
+  <div class="shell menu-panel__top">
+    <Wordmark tone="paper" />
+    <button class="menu-toggle menu-toggle--close" type="button" data-menu-close>
+      <span class="sr-only">Close menu</span>
+      <Icon name="close" size={22} />
+    </button>
+  </div>
+  <nav class="shell menu-panel__nav" aria-label="Mobile">
+    <ul>
+      {
+        nav.map((item, i) => (
+          <li>
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              <span class="menu-panel__num">0{i + 1}</span>
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <Button href="/contact/" variant="sea" size="lg" arrow>Get a quote</Button>
+    {site.email && <a class="menu-panel__email" href={`mailto:${site.email}`}>{site.email}</a>}
+  </nav>
+</div>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    border-bottom: 1px solid transparent;
+    transition:
+      background-color 0.3s,
+      border-color 0.3s,
+      backdrop-filter 0.3s;
+  }
+
+  .site-header.is-scrolled {
+    background: rgb(245 245 241 / 0.86);
+    border-bottom-color: var(--color-rule);
+    backdrop-filter: saturate(140%) blur(12px);
+    -webkit-backdrop-filter: saturate(140%) blur(12px);
+  }
+
+  .site-header__row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 4.75rem;
+  }
+
+  .site-header__brand {
+    margin-right: auto;
+    text-decoration: none;
+  }
+
+  .site-nav ul {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .site-nav a {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.8rem;
+    color: var(--color-ink);
+    font-size: 0.97rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .site-nav a::after {
+    content: '';
+    position: absolute;
+    left: 0.8rem;
+    right: 0.8rem;
+    bottom: 0.28rem;
+    height: 1.5px;
+    background: var(--color-ink);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s var(--ease-out-soft);
+  }
+
+  .site-nav a:hover::after,
+  .site-nav a[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+
+  .site-nav a[aria-current='page']::after {
+    background: var(--color-sea);
+    height: 2px;
+  }
+
+  .menu-toggle {
+    display: none;
+    place-items: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    border: 1px solid var(--color-rule);
+    border-radius: 999px;
+    color: var(--color-ink);
+    cursor: pointer;
+  }
+
+  @media (max-width: 1023px) {
+    .site-nav {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: grid;
+    }
+  }
+
+  @media (max-width: 359px) {
+    :global(.site-header__cta) {
+      display: none !important;
+    }
+  }
+
+  /* Full-screen mobile menu */
+  .menu-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    background: var(--color-midnight);
+    color: var(--color-paper);
+  }
+
+  .menu-panel[hidden] {
+    display: none;
+  }
+
+  .menu-panel__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4.75rem;
+    flex: none;
+  }
+
+  .menu-toggle--close {
+    display: grid;
+    border-color: var(--color-rule-dark);
+    color: var(--color-paper);
+  }
+
+  .menu-panel__nav {
+    display: grid;
+    align-content: start;
+    gap: 2rem;
+    padding-block: 1.5rem 3rem;
+  }
+
+  .menu-panel__nav ul {
+    border-top: 1px solid var(--color-rule-dark);
+  }
+
+  .menu-panel__nav li a {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--color-rule-dark);
+    color: var(--color-paper);
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    text-decoration: none;
+  }
+
+  .menu-panel__nav li a[aria-current='page'] {
+    color: var(--color-sea);
+  }
+
+  .menu-panel__num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: var(--color-mist);
+  }
+
+  .menu-panel__nav :global(.btn) {
+    justify-self: start;
+  }
+
+  .menu-panel__email {
+    color: var(--color-mist);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+  }
+</style>

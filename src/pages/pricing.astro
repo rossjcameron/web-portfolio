@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Pricing from '../components/sections/Pricing.astro'
+import Faq from '../components/sections/Faq.astro'
+import FinalCta from '../components/sections/FinalCta.astro'
+---
+
+<BaseLayout
+  title="Pricing"
+  description="Clear website pricing for UK businesses: Starter Websites from £299, Business Websites from £499 and optional Website Care from £29 a month."
+>
+  <div class="pricing-page">
+    <Pricing index="" variant="full" headingLevel="h1" />
+  </div>
+  <Faq index="" />
+  <FinalCta />
+</BaseLayout>
+
+<style>
+  .pricing-page {
+    padding-top: clamp(1rem, 4vw, 2.5rem);
+  }
+</style>

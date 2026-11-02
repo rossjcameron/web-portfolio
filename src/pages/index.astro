@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Hero from '../components/sections/Hero.astro'
+import Intro from '../components/sections/Intro.astro'
+import SelectedWork from '../components/sections/SelectedWork.astro'
+import Services from '../components/sections/Services.astro'
+import Aperture from '../components/sections/Aperture.astro'
+import Pricing from '../components/sections/Pricing.astro'
+import Process from '../components/sections/Process.astro'
+import Faq from '../components/sections/Faq.astro'
+import FinalCta from '../components/sections/FinalCta.astro'
+import { site } from '../data/site'
+---
+
+<BaseLayout
+  title="Home"
+  fullTitle={`${site.name} | Professional websites for UK businesses`}
+  description="Modern, thoughtfully designed websites for UK small businesses, tradespeople and growing companies. Clear pricing from £299, built to look great and win enquiries."
+>
+  <Hero />
+  <Intro />
+  <SelectedWork />
+  <Services />
+  <Aperture />
+  <Pricing />
+  <Process />
+  <Faq />
+  <FinalCta />
+</BaseLayout>

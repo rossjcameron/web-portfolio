@@ -1,0 +1,378 @@
+---
+import Button from '../Button.astro'
+import BrowserWindow from '../BrowserWindow.astro'
+import PhoneFrame from '../PhoneFrame.astro'
+import MockHartley from '../mockups/MockHartley.astro'
+import { site } from '../../data/site'
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="shell">
+    <div class="hero__top">
+      <p class="eyebrow hero__eyebrow" data-hero-in>Independent web design studio · United Kingdom</p>
+      <h1 id="hero-title" class="hero__title">
+        <span class="line"><span class="line__in" data-hero-line>A better website.</span></span>
+        <span class="line"><span class="line__in" data-hero-line>A stronger <span class="mark">first impression.</span></span></span>
+      </h1>
+      <p class="hero__lede" data-hero-in>
+        Modern, thoughtfully designed websites for UK businesses. Built to look great, work beautifully and make getting
+        online straightforward.
+      </p>
+      <div class="hero__actions" data-hero-in>
+        <div class="hero__ctas">
+          <Button href="/contact/" size="lg" arrow>Start your project</Button>
+          <Button href="/work/" variant="secondary" size="lg">Explore our work</Button>
+        </div>
+        <p class="hero__price">
+          Professional websites from <strong>£{site.priceFrom}</strong>
+          <a href="/pricing/" class="link-arrow">View pricing</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="stage" data-hero-stage>
+      <div class="stage__tilt" data-tilt>
+        <div class="stage__frame" data-hero-panel aria-hidden="true"><i></i><i></i></div>
+        <div class="stage__slab" data-hero-panel aria-hidden="true"></div>
+        <div class="stage__window" data-hero-window>
+          <BrowserWindow title="Hartley & Stone">
+            <MockHartley />
+          </BrowserWindow>
+          <span class="stage__sheen" data-hero-sheen aria-hidden="true"></span>
+        </div>
+        <div class="stage__phone" data-hero-phone aria-hidden="true">
+          <PhoneFrame><MockHartley /></PhoneFrame>
+        </div>
+      </div>
+      <p class="stage__caption">
+        <span>Concept</span> Website design for a fictional construction company, shown on desktop and mobile
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+    overflow: hidden;
+  }
+
+  .hero__top {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 1.5rem;
+  }
+
+  .hero__eyebrow,
+  .hero__title {
+    grid-column: 1 / -1;
+  }
+
+  .hero__title {
+    font-size: clamp(2.55rem, 0.9rem + 6.1vw, 6rem);
+    font-weight: 600;
+    font-stretch: 92%;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+
+  .line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+
+  .line__in {
+    display: block;
+  }
+
+  .hero__lede {
+    grid-column: 1 / span 5;
+    margin-top: 1rem;
+    font-size: var(--text-lead);
+    line-height: 1.55;
+    color: var(--color-slate);
+  }
+
+  .hero__actions {
+    grid-column: 8 / -1;
+    align-self: end;
+    display: grid;
+    justify-items: end;
+    gap: 1.1rem;
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+
+  .hero__price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: flex-end;
+    gap: 0.4rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-slate);
+  }
+
+  .hero__price strong {
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+
+  .hero__price .link-arrow {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--color-ink);
+  }
+
+  @media (max-width: 1023px) {
+    .hero__lede,
+    .hero__actions {
+      grid-column: 1 / -1;
+    }
+
+    .hero__actions,
+    .hero__ctas,
+    .hero__price {
+      justify-items: start;
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .hero__ctas {
+      display: grid;
+      width: 100%;
+    }
+  }
+
+  /* Composition */
+  .stage {
+    position: relative;
+    margin-top: clamp(3rem, 7vw, 5.5rem);
+    perspective: 2200px;
+  }
+
+  .stage__tilt {
+    --rx: 3deg;
+    --ry: 0deg;
+    position: relative;
+    padding: 4% 0 6% 0;
+    transform: rotateX(var(--rx)) rotateY(var(--ry));
+    transform-style: preserve-3d;
+  }
+
+  .stage__window {
+    position: relative;
+    width: 84%;
+    margin-left: 14%;
+    transform: translateZ(0);
+  }
+
+  .stage__window :global(.bw) {
+    box-shadow:
+      0 0 0 1px rgb(23 32 38 / 0.1),
+      0 50px 100px -40px rgb(23 32 38 / 0.45),
+      0 18px 36px -18px rgb(23 32 38 / 0.2);
+  }
+
+  /* Architectural window frame behind the browser */
+  .stage__frame {
+    position: absolute;
+    top: 0;
+    left: 5%;
+    width: 46%;
+    height: 72%;
+    border: 1.5px solid rgb(23 32 38 / 0.28);
+    transform: translateZ(-120px);
+  }
+
+  .stage__frame i {
+    position: absolute;
+    background: rgb(23 32 38 / 0.28);
+  }
+
+  .stage__frame i:first-child {
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1.5px;
+  }
+
+  .stage__frame i:last-child {
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1.5px;
+  }
+
+  .stage__slab {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 44%;
+    height: 62%;
+    background:
+      linear-gradient(135deg, rgb(121 191 193 / 0.35), transparent 55%),
+      var(--color-midnight);
+    transform: translateZ(-80px);
+  }
+
+  .stage__sheen {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-frame);
+    background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.42) 48%, rgb(255 255 255 / 0.1) 52%, transparent 62%);
+    pointer-events: none;
+    opacity: 0;
+    mix-blend-mode: soft-light;
+  }
+
+  .stage__phone {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 15.5%;
+    transform: translateZ(60px);
+  }
+
+  .stage__caption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    margin-top: 1rem;
+    margin-left: 14%;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-slate);
+  }
+
+  .stage__caption span {
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--color-rule);
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 767px) {
+    .stage__tilt {
+      --rx: 0deg;
+      padding: 6% 0 14%;
+    }
+
+    .stage__window {
+      width: 88%;
+      margin-left: 12%;
+    }
+
+    .stage__frame {
+      left: 0;
+      width: 60%;
+      height: 60%;
+    }
+
+    .stage__slab {
+      width: 50%;
+      height: 50%;
+    }
+
+    .stage__phone {
+      left: 0;
+      bottom: 0;
+      width: 26%;
+    }
+
+    .stage__caption {
+      margin-left: 0;
+    }
+  }
+
+  /* Initial state for the entrance animation (only when JS + motion are on) */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) [data-hero-in],
+    :global(.js) [data-hero-window],
+    :global(.js) [data-hero-panel],
+    :global(.js) [data-hero-phone],
+    :global(.js) [data-hero-line] {
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap'
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  if (!reduce) {
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+    tl.fromTo('[data-hero-line]', { yPercent: 105, opacity: 1 }, { yPercent: 0, duration: 0.75, stagger: 0.08 }, 0)
+      .fromTo('[data-hero-in]', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.55, stagger: 0.06 }, 0.15)
+      .fromTo(
+        '[data-hero-window]',
+        { opacity: 0, y: 48, scale: 0.955, rotateX: 7, transformOrigin: '50% 100%' },
+        { opacity: 1, y: 0, scale: 1, rotateX: 0, duration: 0.85 },
+        0.2,
+      )
+      .fromTo(
+        '[data-hero-panel]',
+        { opacity: 0, x: (i: number) => (i === 0 ? 28 : -28), y: (i: number) => (i === 0 ? 28 : -20) },
+        { opacity: 1, x: 0, y: 0, duration: 0.8 },
+        0.32,
+      )
+      .fromTo('[data-hero-phone]', { opacity: 0, y: 32 }, { opacity: 1, y: 0, duration: 0.65 }, 0.42)
+      .fromTo(
+        '[data-hero-sheen]',
+        { opacity: 1, xPercent: -70 },
+        { xPercent: 70, opacity: 0, duration: 0.9, ease: 'power2.inOut' },
+        0.75,
+      )
+  }
+
+  // Gentle perspective shift that follows the pointer (desktop only)
+  const stage = document.querySelector<HTMLElement>('[data-hero-stage]')
+  const tilt = stage?.querySelector<HTMLElement>('[data-tilt]')
+  const hero = stage?.closest<HTMLElement>('.hero')
+  const canTilt = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1024px)').matches
+
+  if (stage && tilt && hero && canTilt && !reduce) {
+    let targetX = 0
+    let targetY = 0
+    let x = 0
+    let y = 0
+    let frame = 0
+
+    const step = () => {
+      x += (targetX - x) * 0.08
+      y += (targetY - y) * 0.08
+      tilt.style.setProperty('--ry', `${(x * 3.2).toFixed(3)}deg`)
+      tilt.style.setProperty('--rx', `${(3 - y * 2.4).toFixed(3)}deg`)
+      frame = Math.abs(targetX - x) > 0.001 || Math.abs(targetY - y) > 0.001 ? requestAnimationFrame(step) : 0
+    }
+    const kick = () => {
+      if (!frame) frame = requestAnimationFrame(step)
+    }
+
+    hero.addEventListener('pointermove', (event) => {
+      const rect = stage.getBoundingClientRect()
+      targetX = Math.max(-0.5, Math.min(0.5, (event.clientX - rect.left) / rect.width - 0.5))
+      targetY = Math.max(-0.5, Math.min(0.5, (event.clientY - rect.top) / rect.height - 0.5))
+      kick()
+    })
+    hero.addEventListener('pointerleave', () => {
+      targetX = 0
+      targetY = 0
+      kick()
+    })
+  }
+</script>

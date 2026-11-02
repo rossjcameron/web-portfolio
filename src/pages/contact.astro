@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PageHeader from '../components/PageHeader.astro'
+import ContactForm from '../components/ContactForm.astro'
+import Icon from '../components/Icon.astro'
+import { site } from '../data/site'
+
+const steps = [
+  'We read your enquiry and look at any existing website.',
+  'We reply by email with any questions and a suggested starting point.',
+  'You receive a fixed quote setting out exactly what’s included.',
+  'You decide. There’s no obligation to go ahead.',
+]
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get a quote for a professional website from New Window Web Design. Tell us about your business and we’ll suggest the right starting point."
+>
+  <PageHeader
+    eyebrow="Contact"
+    title="Let’s talk about your website."
+    lede="Tell us a little about your business and what you need. It only takes a couple of minutes, and there’s no obligation."
+  />
+
+  <section class="contact" aria-label="Enquiry form">
+    <div class="shell contact__grid">
+      <div class="contact__form">
+        <ContactForm />
+      </div>
+
+      <aside class="contact__aside" aria-labelledby="next-title">
+        <div>
+        <h2 id="next-title" class="eyebrow">What happens next</h2>
+        <ol>
+          {
+            steps.map((step, i) => (
+              <li>
+                <span>{String(i + 1).padStart(2, '0')}</span>
+                {step}
+              </li>
+            ))
+          }
+        </ol>
+        </div>
+
+        {
+          site.email && (
+            <div class="contact__email">
+              <h2 class="eyebrow">Prefer email?</h2>
+              <a href={`mailto:${site.email}`}>
+                <Icon name="mail" size={18} />
+                {site.email}
+              </a>
+            </div>
+          )
+        }
+
+        <div class="contact__pricing surface-stone">
+          <h2 class="eyebrow">Pricing at a glance</h2>
+          <p>Starter Website from £299. Business Website from £499. Website Care from £29 a month.</p>
+          <a href="/pricing/" class="link-arrow">View pricing <Icon name="arrow-right" size={16} /></a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact {
+    padding-block: clamp(3rem, 7vw, 5rem) clamp(4.5rem, 9vw, 7rem);
+  }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 3.5rem;
+  }
+
+  .contact__form {
+    grid-column: 1 / span 7;
+  }
+
+  .contact__aside {
+    grid-column: 9 / -1;
+    display: grid;
+    align-content: start;
+    gap: 2.75rem;
+  }
+
+  @media (max-width: 1023px) {
+    .contact__form,
+    .contact__aside {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .contact__aside ol {
+    display: grid;
+    margin-top: 1rem;
+    border-top: 1px solid var(--color-ink);
+  }
+
+  .contact__aside li {
+    display: grid;
+    grid-template-columns: 2.25rem 1fr;
+    gap: 0.5rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .contact__aside li span {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-slate);
+    padding-top: 0.2rem;
+  }
+
+  .contact__email a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  .contact__pricing {
+    display: grid;
+    gap: 0.75rem;
+    justify-items: start;
+    padding: 1.5rem;
+    background: var(--color-stone);
+  }
+
+  .contact__pricing p {
+    color: var(--color-slate);
+  }
+</style>

@@ -1,0 +1,396 @@
+---
+import Icon from './Icon.astro'
+import { site } from '../data/site'
+import { SERVICES } from '../server/contact'
+
+const turnstileKey = (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '').trim()
+---
+
+<form class="contact-form" method="post" action="/api/contact" novalidate data-contact-form data-email={site.email}>
+  <div class="contact-form__fields">
+    <div class="field">
+      <label for="cf-name">Name</label>
+      <input id="cf-name" name="name" type="text" autocomplete="name" required maxlength="100" aria-describedby="cf-name-error" />
+      <p class="field__error" id="cf-name-error" data-error-for="name"></p>
+    </div>
+
+    <div class="field">
+      <label for="cf-business">Business name</label>
+      <input id="cf-business" name="business" type="text" autocomplete="organization" required maxlength="120" aria-describedby="cf-business-error" />
+      <p class="field__error" id="cf-business-error" data-error-for="business"></p>
+    </div>
+
+    <div class="field">
+      <label for="cf-email">Email address</label>
+      <input id="cf-email" name="email" type="email" autocomplete="email" required maxlength="200" aria-describedby="cf-email-error" />
+      <p class="field__error" id="cf-email-error" data-error-for="email"></p>
+    </div>
+
+    <div class="field">
+      <label for="cf-website">Existing website <span>Optional</span></label>
+      <input id="cf-website" name="website" type="text" inputmode="url" autocomplete="url" maxlength="200" placeholder="example.co.uk" aria-describedby="cf-website-error" />
+      <p class="field__error" id="cf-website-error" data-error-for="website"></p>
+    </div>
+
+    <div class="field field--wide">
+      <label for="cf-service">What are you interested in?</label>
+      <div class="select">
+        <select id="cf-service" name="service" required aria-describedby="cf-service-error">
+          {
+            Object.entries(SERVICES).map(([value, label]) => (
+              <option value={value} selected={value === 'unsure'}>
+                {label}
+                {value === 'starter' ? ' (from £299)' : value === 'business' ? ' (from £499)' : value === 'care' ? ' (from £29 a month)' : ''}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+      <p class="field__error" id="cf-service-error" data-error-for="service"></p>
+    </div>
+
+    <div class="field field--wide">
+      <label for="cf-message">Tell us about your project</label>
+      <textarea
+        id="cf-message"
+        name="message"
+        rows="5"
+        required
+        minlength="10"
+        maxlength="3000"
+        placeholder="What does your business do, and what would you like your website to help with?"
+        aria-describedby="cf-message-error"></textarea>
+      <p class="field__error" id="cf-message-error" data-error-for="message"></p>
+    </div>
+  </div>
+
+  <!-- Spam traps: hidden from people, often filled in by bots -->
+  <div class="contact-form__trap" aria-hidden="true">
+    <label for="cf-company-website">Leave this field empty</label>
+    <input id="cf-company-website" name="company_website" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+  <input type="hidden" name="started_at" value="" data-started-at />
+
+  {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} data-theme="light" data-size="flexible" />}
+
+  <div class="contact-form__submit">
+    <button type="submit" class="submit">
+      <span data-submit-label>Send enquiry</span>
+      <Icon name="arrow-right" size={17} />
+    </button>
+    <p class="contact-form__privacy">
+      We’ll only use your details to reply to your enquiry. Read our <a href="/privacy/">Privacy Policy</a>.
+    </p>
+  </div>
+
+  <div class="contact-form__status" role="status" aria-live="polite" data-status></div>
+</form>
+
+<div class="contact-success" hidden data-success tabindex="-1">
+  <Icon name="check" size={28} />
+  <h2>Thanks, your enquiry has been sent.</h2>
+  <p>We’ll read it carefully and reply by email with the next steps.</p>
+</div>
+
+{turnstileKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<style>
+  .contact-form {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .contact-form__fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.4rem 1.25rem;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.45rem;
+    align-content: start;
+  }
+
+  .field--wide {
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 599px) {
+    .contact-form__fields {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  label {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  label span {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.85rem 0.95rem;
+    border: 1px solid rgb(23 32 38 / 0.22);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1.4;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 9rem;
+  }
+
+  ::placeholder {
+    color: #8a949a;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--color-ink);
+    box-shadow: 0 0 0 3px var(--color-mint);
+  }
+
+  input[aria-invalid='true'],
+  select[aria-invalid='true'],
+  textarea[aria-invalid='true'] {
+    border-color: #b42318;
+    box-shadow: 0 0 0 1px #b42318;
+  }
+
+  .select {
+    position: relative;
+  }
+
+  .select::after {
+    content: '';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 1.5px solid var(--color-ink);
+    border-bottom: 1.5px solid var(--color-ink);
+    translate: 0 -70%;
+    rotate: 45deg;
+    pointer-events: none;
+  }
+
+  select {
+    appearance: none;
+    padding-right: 2.5rem;
+  }
+
+  .field__error {
+    min-height: 0;
+    color: #b42318;
+    font-size: 0.88rem;
+  }
+
+  .field__error:empty {
+    display: none;
+  }
+
+  .contact-form__trap {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .contact-form__submit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+  }
+
+  .submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 1.6rem;
+    border-radius: 999px;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .submit:hover {
+    background: #26343d;
+  }
+
+  .submit[disabled] {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  .contact-form__privacy {
+    max-width: 34ch;
+    font-size: 0.88rem;
+    color: var(--color-slate);
+  }
+
+  .contact-form__privacy a {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-sea);
+    text-underline-offset: 2px;
+  }
+
+  .contact-form__status:empty {
+    display: none;
+  }
+
+  .contact-form__status {
+    padding: 1rem 1.1rem;
+    border-left: 3px solid #b42318;
+    background: #fdf1ef;
+    font-size: 0.95rem;
+  }
+
+  .contact-form__status a {
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  .contact-success {
+    display: grid;
+    gap: 0.9rem;
+    padding: clamp(2rem, 5vw, 3rem);
+    border: 1px solid var(--color-ink);
+    background: var(--color-mint);
+  }
+
+  .contact-success[hidden] {
+    display: none;
+  }
+
+  .contact-success h2 {
+    font-size: var(--text-title);
+    letter-spacing: -0.02em;
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]')
+  const success = document.querySelector<HTMLElement>('[data-success]')
+
+  if (form && success) {
+    const status = form.querySelector<HTMLElement>('[data-status]')!
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!
+    const label = form.querySelector<HTMLElement>('[data-submit-label]')!
+    const email = form.dataset.email ?? ''
+    const startedAt = form.querySelector<HTMLInputElement>('[data-started-at]')
+    if (startedAt) startedAt.value = String(Date.now())
+
+    // Pre-select a package from links like /contact/?service=business
+    const requested = new URLSearchParams(window.location.search).get('service')
+    const select = form.querySelector<HTMLSelectElement>('select[name="service"]')
+    if (requested && select && Array.from(select.options).some((o) => o.value === requested)) select.value = requested
+
+    const messages: Record<string, (el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) => string> = {
+      name: () => 'Please enter your name.',
+      business: () => 'Please enter your business name.',
+      email: (el) => (el.value ? 'Please enter a valid email address, like name@example.co.uk.' : 'Please enter your email address.'),
+      message: (el) => (el.value ? 'Please add a little more detail.' : 'Please tell us a little about your project.'),
+      service: () => 'Please choose an option.',
+      website: () => 'Please enter a web address, like example.co.uk.',
+    }
+
+    const setError = (name: string, text: string) => {
+      const field = form.elements.namedItem(name) as HTMLInputElement | null
+      const slot = form.querySelector<HTMLElement>(`[data-error-for="${name}"]`)
+      if (slot) slot.textContent = text
+      if (field) field.setAttribute('aria-invalid', text ? 'true' : 'false')
+    }
+
+    const clearErrors = () => {
+      form.querySelectorAll<HTMLElement>('[data-error-for]').forEach((slot) => setError(slot.dataset.errorFor!, ''))
+      status.textContent = ''
+    }
+
+    const fallback = email ? ` You can also email us at <a href="mailto:${email}">${email}</a>.` : ''
+
+    form.addEventListener('input', (event) => {
+      const target = event.target as HTMLInputElement
+      if (target.getAttribute('aria-invalid') === 'true' && target.checkValidity()) setError(target.name, '')
+    })
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      clearErrors()
+
+      // Client-side check first (the server validates again)
+      let firstInvalid: HTMLElement | null = null
+      for (const name of Object.keys(messages)) {
+        const field = form.elements.namedItem(name) as HTMLInputElement | null
+        if (field && !field.checkValidity()) {
+          setError(name, messages[name]!(field))
+          firstInvalid ??= field
+        }
+      }
+      if (firstInvalid) {
+        firstInvalid.focus()
+        return
+      }
+
+      button.disabled = true
+      label.textContent = 'Sending…'
+
+      try {
+        const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+        const result = (await response.json().catch(() => ({}))) as {
+          ok?: boolean
+          message?: string
+          errors?: Record<string, string>
+        }
+
+        if (response.ok && result.ok) {
+          form.hidden = true
+          success.hidden = false
+          success.focus()
+          return
+        }
+
+        if (result.errors) {
+          Object.entries(result.errors).forEach(([name, text]) => setError(name, text))
+          ;(form.querySelector('[aria-invalid="true"]') as HTMLElement | null)?.focus()
+        }
+        status.innerHTML = `${result.message ?? 'Sorry, something went wrong sending your enquiry. Please try again.'}${fallback}`
+        // Reset Turnstile so a fresh token is used on the next attempt
+        ;(window as unknown as { turnstile?: { reset: () => void } }).turnstile?.reset()
+      } catch {
+        status.innerHTML = `We couldn’t reach our server. Please check your connection and try again.${fallback}`
+      } finally {
+        button.disabled = false
+        label.textContent = 'Send enquiry'
+      }
+    })
+  }
+</script>

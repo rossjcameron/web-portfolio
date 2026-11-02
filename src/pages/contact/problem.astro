@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import PageHeader from '../../components/PageHeader.astro'
+import Button from '../../components/Button.astro'
+import { site } from '../../data/site'
+---
+
+<BaseLayout title="Enquiry not sent" description="There was a problem sending your enquiry." noindex>
+  <PageHeader
+    eyebrow="Enquiry not sent"
+    title="Sorry, your enquiry didn’t go through."
+    lede="Something was missing from the form, or our spam check couldn’t confirm the submission. Please go back and try again."
+  >
+    <div class="actions">
+      <Button href="/contact/" arrow>Back to the contact form</Button>
+      {site.email && <a href={`mailto:${site.email}`}>Or email {site.email}</a>}
+    </div>
+  </PageHeader>
+</BaseLayout>
+
+<style>
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+  }
+</style>

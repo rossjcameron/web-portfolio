@@ -1,0 +1,20 @@
+---
+// Small four-pane window glyph; `pane` picks which pane is filled (0 top-left … 3 bottom-right).
+interface Props {
+  pane: 0 | 1 | 2 | 3
+  class?: string
+}
+const { pane, class: className } = Astro.props
+const pos = [
+  [3.6, 3.6],
+  [13.6, 3.6],
+  [3.6, 13.6],
+  [13.6, 13.6],
+][pane]!
+---
+
+<svg class:list={['pane-glyph', className]} viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+  <rect x={pos[0]} y={pos[1]} width="6.8" height="6.8" rx="0.6" fill="var(--color-sea)"></rect>
+  <rect x="1.25" y="1.25" width="21.5" height="21.5" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"></rect>
+  <path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="1.6"></path>
+</svg>

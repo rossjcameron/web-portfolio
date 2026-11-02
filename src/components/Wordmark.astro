@@ -1,0 +1,73 @@
+---
+interface Props {
+  descriptor?: boolean
+  tone?: 'ink' | 'paper'
+  class?: string
+}
+const { descriptor = false, tone = 'ink', class: className } = Astro.props
+---
+
+<span class:list={['wordmark', `wordmark--${tone}`, className]}>
+  <svg class="wordmark__mark" viewBox="0 0 24 24" aria-hidden="true">
+    <rect x="1.25" y="1.25" width="21.5" height="21.5" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.5"></rect>
+    <path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="2.5"></path>
+    <rect x="13.6" y="3.6" width="6.8" height="6.8" rx="0.6" class="wordmark__pane"></rect>
+  </svg>
+  <span class="wordmark__text">
+    <span class="wordmark__name">new window<span class="wordmark__dot">.</span></span>
+    {descriptor && <span class="wordmark__descriptor">Web design &amp; development</span>}
+  </span>
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--color-ink);
+    line-height: 1;
+  }
+
+  .wordmark--paper {
+    color: var(--color-paper);
+  }
+
+  .wordmark__mark {
+    width: 1.55rem;
+    height: 1.55rem;
+    flex: none;
+  }
+
+  .wordmark__pane {
+    fill: var(--color-sea);
+  }
+
+  .wordmark__text {
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .wordmark__name {
+    font-size: 1.28rem;
+    font-weight: 600;
+    font-stretch: 92%;
+    letter-spacing: -0.035em;
+  }
+
+  .wordmark__dot {
+    color: var(--color-sea);
+  }
+
+  .wordmark--ink .wordmark__dot {
+    color: #4f9fa2;
+  }
+
+  .wordmark__descriptor {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+</style>

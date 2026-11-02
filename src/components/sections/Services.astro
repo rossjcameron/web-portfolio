@@ -1,0 +1,115 @@
+---
+import SectionLabel from '../SectionLabel.astro'
+import PaneGlyph from '../PaneGlyph.astro'
+import Icon from '../Icon.astro'
+
+const services = [
+  {
+    id: 'design',
+    title: 'Website Design',
+    text: 'Modern websites thoughtfully designed around your business, your customers and how they choose who to contact.',
+  },
+  {
+    id: 'development',
+    title: 'Website Development',
+    text: 'Responsive, lightweight websites built with modern technology, tested across devices and quick to load.',
+  },
+  {
+    id: 'care',
+    title: 'Website Care',
+    text: 'Optional hosting, monitoring and maintenance from £29 a month, to keep your website running properly.',
+  },
+] as const
+---
+
+<section class="services surface-stone" aria-labelledby="services-title">
+  <div class="shell">
+    <div class="services__head">
+      <SectionLabel index="03">Services</SectionLabel>
+      <h2 id="services-title" data-reveal>Everything you need. Nothing you don’t.</h2>
+    </div>
+    <div class="services__grid">
+      {
+        services.map((service, i) => (
+          <article class="service" data-reveal style={`--reveal-delay: ${i * 90}ms`}>
+            <PaneGlyph pane={([0, 1, 2] as const)[i]!} />
+            <h3>{service.title}</h3>
+            <p>{service.text}</p>
+            <a href={`/services/#${service.id}`} class="link-arrow">
+              Learn more <span class="sr-only">about {service.title}</span>
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    padding-block: clamp(4rem, 9vw, 7rem);
+    background: var(--color-stone);
+  }
+
+  .services__head {
+    display: grid;
+    gap: 1.75rem;
+    margin-bottom: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .services__head h2 {
+    max-width: 16ch;
+    font-size: var(--text-headline);
+    line-height: var(--text-headline--line-height);
+    letter-spacing: var(--text-headline--letter-spacing);
+    font-stretch: 94%;
+  }
+
+  .services__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--color-ink);
+  }
+
+  .service {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 0.9rem;
+    padding: 2rem clamp(1rem, 2.4vw, 2.25rem) 0.5rem 0;
+  }
+
+  .service + .service {
+    padding-left: clamp(1rem, 2.4vw, 2.25rem);
+    border-left: 1px solid var(--color-rule);
+  }
+
+  .service h3 {
+    margin-top: 0.75rem;
+    font-size: var(--text-title);
+    letter-spacing: -0.025em;
+  }
+
+  .service p {
+    color: var(--color-slate);
+    max-width: 34ch;
+  }
+
+  .service .link-arrow {
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 767px) {
+    .services__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service,
+    .service + .service {
+      padding: 2rem 0;
+      border-left: 0;
+      border-bottom: 1px solid var(--color-rule);
+    }
+  }
+</style>

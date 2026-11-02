@@ -1,0 +1,122 @@
+---
+import Wordmark from './Wordmark.astro'
+import { site } from '../data/site'
+
+const year = new Date().getFullYear()
+---
+
+<footer class="site-footer on-dark">
+  <div class="shell">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a href="/"><Wordmark tone="paper" descriptor /></a>
+        <p>{site.tagline} Clear pricing, thoughtful design and straightforward service.</p>
+      </div>
+
+      <nav aria-label="Footer" class="site-footer__cols">
+        <div>
+          <p class="eyebrow">Explore</p>
+          <ul>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/work/">Our Work</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="eyebrow">Studio</p>
+          <ul>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/contact/">Contact</a></li>
+            {site.socials.map((s) => <li><a href={s.href} rel="noopener">{s.label}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <p class="eyebrow">Get in touch</p>
+          <ul>
+            {site.email && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
+            <li><a href="/contact/">Start your project</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>© {year} {site.name}. All rights reserved.</p>
+      <ul>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms and Conditions</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-midnight);
+    color: var(--color-mist);
+    padding-block: clamp(3.5rem, 7vw, 5.5rem) 2rem;
+  }
+
+  .site-footer a {
+    color: var(--color-paper);
+    text-decoration: none;
+  }
+
+  .site-footer a:hover {
+    color: var(--color-sea);
+  }
+
+  .site-footer__top {
+    display: grid;
+    gap: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  @media (min-width: 900px) {
+    .site-footer__top {
+      grid-template-columns: 5fr 7fr;
+    }
+  }
+
+  .site-footer__brand {
+    display: grid;
+    align-content: start;
+    gap: 1.25rem;
+  }
+
+  .site-footer__brand p {
+    max-width: 34ch;
+  }
+
+  .site-footer__cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 2rem;
+  }
+
+  .site-footer__cols ul {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1rem;
+  }
+
+  .site-footer__cols a {
+    overflow-wrap: anywhere;
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-rule-dark);
+    font-size: 0.9rem;
+  }
+
+  .site-footer__bottom ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+</style>

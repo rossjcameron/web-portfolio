@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import PageHeader from '../../components/PageHeader.astro'
+import SelectedWork from '../../components/sections/SelectedWork.astro'
+import FinalCta from '../../components/sections/FinalCta.astro'
+---
+
+<BaseLayout
+  title="Our Work"
+  description="Website concepts by New Window Web Design for construction, automotive detailing and professional services businesses."
+>
+  <PageHeader
+    eyebrow="Our work"
+    title="A closer look at what we build."
+    lede="Our launch portfolio is made up of concept projects: complete website designs for the kinds of businesses we work with. Each is clearly labelled, and commissioned client work will be added as projects launch."
+  />
+  <SelectedWork showHeading={false} />
+  <FinalCta />
+</BaseLayout>

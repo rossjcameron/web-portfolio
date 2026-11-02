@@ -1,0 +1,317 @@
+---
+// Concept website for a fictional accountancy practice.
+---
+
+<div class="mk" aria-hidden="true">
+  <header class="nav">
+    <span class="logo"><i></i>Calder &amp; Finch</span>
+    <span class="links"><span>Services</span><span>Fees</span><span>Resources</span><span>About</span></span>
+    <span class="btn">Book a free consultation</span>
+    <span class="burger"><i></i><i></i></span>
+  </header>
+
+  <div class="hero">
+    <div class="copy">
+      <span class="kicker">Accountants for small businesses</span>
+      <p class="h">Your accounts, sorted. Your time, back.</p>
+      <p class="p">Bookkeeping, payroll, VAT and year-end accounts for sole traders and limited companies, with fixed monthly fees.</p>
+      <div class="ctas"><span class="btn">Book a free consultation</span><span class="more">See our fees</span></div>
+    </div>
+
+    <div class="art">
+      <div class="facade"></div>
+      <div class="card">
+        <span class="card__title">Monthly fee guide</span>
+        <span class="row"><span>Sole trader</span><b>from £45</b></span>
+        <span class="row"><span>Limited company</span><b>from £95</b></span>
+        <span class="row"><span>Payroll, up to 5 staff</span><b>from £25</b></span>
+        <span class="row"><span>VAT returns</span><b>from £30</b></span>
+        <span class="note">Fixed fees, agreed up front</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <span>Bookkeeping</span><span>Payroll</span><span>VAT returns</span><span>Year-end accounts</span>
+  </div>
+</div>
+
+<style>
+  .mk {
+    --bg: #fbfbf8;
+    --ink: #1c332d;
+    --muted: #5f6f69;
+    --sage: #dce8e2;
+    --gold: #8a6428;
+    container-type: inline-size;
+    min-height: 100%;
+    padding: 2.6cqi 4cqi 4cqi;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    line-height: 1.25;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 3.2cqi;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 1cqi;
+    margin-right: auto;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 2.1cqi;
+    font-weight: 400;
+  }
+
+  .logo i {
+    width: 1.9cqi;
+    height: 1.9cqi;
+    border-radius: 50% 50% 0 50%;
+    background: var(--ink);
+  }
+
+  .links {
+    display: flex;
+    gap: 2.8cqi;
+    font-size: 1.4cqi;
+    color: var(--muted);
+  }
+
+  .btn {
+    padding: 1.15cqi 2.2cqi;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 1.35cqi;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .burger {
+    display: none;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: 4.4cqi;
+    padding-top: 5.2cqi;
+  }
+
+  .kicker {
+    display: inline-block;
+    margin-bottom: 2.4cqi;
+    padding: 0.7cqi 1.4cqi;
+    border-radius: 999px;
+    background: var(--sage);
+    font-size: 1.2cqi;
+    font-weight: 600;
+  }
+
+  .h {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 5cqi;
+    font-weight: 400;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+  }
+
+  .p {
+    max-width: 36ch;
+    margin: 2.4cqi 0 3.2cqi;
+    font-size: 1.55cqi;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .ctas {
+    display: flex;
+    align-items: center;
+    gap: 2.4cqi;
+  }
+
+  .more {
+    font-size: 1.4cqi;
+    font-weight: 600;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  .art {
+    position: relative;
+    aspect-ratio: 1.05;
+  }
+
+  /* Office facade: a grid of windows */
+  .facade {
+    position: absolute;
+    inset: 0 0 8% 14%;
+    border-radius: 1.2cqi;
+    background:
+      linear-gradient(90deg, transparent 0 7%, #fbfbf8 7% 9%) 0 0 / 16.66% 100%,
+      linear-gradient(transparent 0 12%, #fbfbf8 12% 15%) 0 0 / 100% 20%,
+      linear-gradient(160deg, #c9dbd2, #9fbaae 70%, #8eab9f);
+  }
+
+  .card {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: grid;
+    gap: 1.1cqi;
+    width: 72%;
+    padding: 2.4cqi;
+    border-radius: 1.2cqi;
+    background: #fff;
+    box-shadow:
+      0 0 0 1px rgb(28 51 45 / 0.08),
+      0 2.4cqi 4cqi -1cqi rgb(28 51 45 / 0.2);
+  }
+
+  .card__title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.8cqi;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 2cqi;
+    padding-bottom: 1.1cqi;
+    border-bottom: 1px solid rgb(28 51 45 / 0.08);
+    font-size: 1.3cqi;
+    color: var(--muted);
+  }
+
+  .row b {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .note {
+    font-size: 1.15cqi;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2cqi;
+    margin-top: 4.4cqi;
+  }
+
+  .strip span {
+    padding: 1.1cqi 2cqi;
+    border: 1px solid rgb(28 51 45 / 0.14);
+    border-radius: 999px;
+    font-size: 1.3cqi;
+  }
+
+  @container (max-width: 520px) {
+    .mk {
+      padding: 13cqi 6cqi 6cqi;
+    }
+
+    .logo {
+      font-size: 5cqi;
+      gap: 2cqi;
+    }
+
+    .logo i {
+      width: 4.4cqi;
+      height: 4.4cqi;
+    }
+
+    .links,
+    .nav .btn {
+      display: none;
+    }
+
+    .burger {
+      display: grid;
+      gap: 1.6cqi;
+      width: 6cqi;
+    }
+
+    .burger i {
+      height: 0.6cqi;
+      background: var(--ink);
+    }
+
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 7cqi;
+      padding-top: 7cqi;
+    }
+
+    .kicker {
+      font-size: 3cqi;
+      padding: 1.6cqi 3cqi;
+      margin-bottom: 4cqi;
+    }
+
+    .h {
+      font-size: 11cqi;
+    }
+
+    .p {
+      font-size: 4.1cqi;
+      margin: 4cqi 0 5cqi;
+    }
+
+    .ctas {
+      flex-wrap: wrap;
+      gap: 4cqi;
+    }
+
+    .ctas .btn {
+      font-size: 3.6cqi;
+      padding: 3cqi 5cqi;
+    }
+
+    .more {
+      font-size: 3.6cqi;
+    }
+
+    .art {
+      aspect-ratio: 0.95;
+    }
+
+    .card {
+      width: 84%;
+      gap: 2.4cqi;
+      padding: 5cqi;
+      border-radius: 3cqi;
+    }
+
+    .card__title {
+      font-size: 4.4cqi;
+    }
+
+    .row {
+      font-size: 3.3cqi;
+      padding-bottom: 2.4cqi;
+    }
+
+    .note {
+      font-size: 3cqi;
+    }
+
+    .strip {
+      gap: 2.4cqi;
+      margin-top: 7cqi;
+    }
+
+    .strip span {
+      font-size: 3.2cqi;
+      padding: 2.2cqi 4cqi;
+    }
+  }
+</style>

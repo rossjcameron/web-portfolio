@@ -1,0 +1,335 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import BrowserWindow from '../../components/BrowserWindow.astro'
+import PhoneFrame from '../../components/PhoneFrame.astro'
+import Icon from '../../components/Icon.astro'
+import FinalCta from '../../components/sections/FinalCta.astro'
+import { projects, type Project } from '../../data/projects'
+import { mockups } from '../../components/mockups'
+
+export function getStaticPaths() {
+  return projects.map((project, i) => ({
+    params: { slug: project.slug },
+    props: { project, next: projects[(i + 1) % projects.length]! },
+  }))
+}
+
+interface Props {
+  project: Project
+  next: Project
+}
+
+const { project, next } = Astro.props
+const { component: Mock, tone } = mockups[project.slug as keyof typeof mockups]
+---
+
+<BaseLayout
+  title={`${project.name} (concept)`}
+  description={`${project.summary} A concept website by New Window Web Design.`}
+  ogType="article"
+>
+  <section class="case-head">
+    <div class="shell">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/work/">Our work</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{project.name}</span>
+      </nav>
+      <div class="case-head__grid">
+        <div>
+          <p class="case-tag">Concept project</p>
+          <h1>{project.name}</h1>
+          <p class="case-head__summary">{project.summary}</p>
+        </div>
+        <dl class="case-meta">
+          <div><dt>Industry</dt><dd>{project.industry}</dd></div>
+          <div><dt>Website</dt><dd>{project.type}</dd></div>
+          <div><dt>Status</dt><dd>Concept design, not a commissioned project</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-hero" aria-label="Desktop design">
+    <div class="shell">
+      <BrowserWindow title={project.name} tone={tone}>
+        <Mock />
+      </BrowserWindow>
+    </div>
+  </section>
+
+  <div class="shell case-body">
+    <section class="case-block" aria-labelledby="context">
+      <h2 id="context">Context</h2>
+      <p>{project.context}</p>
+    </section>
+    <section class="case-block" aria-labelledby="brief">
+      <h2 id="brief">Brief</h2>
+      <p>{project.brief}</p>
+    </section>
+    <section class="case-block" aria-labelledby="approach">
+      <h2 id="approach">Design approach</h2>
+      <ul>
+        {project.approach.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+    <section class="case-block" aria-labelledby="features">
+      <h2 id="features">Website features</h2>
+      <ul class="features">
+        {project.features.map((item) => (
+          <li>
+            <Icon name="check" size={18} />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+
+  <section class="devices surface-stone" aria-labelledby="devices-title">
+    <div class="shell">
+      <h2 id="devices-title" class="eyebrow">Desktop and mobile</h2>
+      <div class="devices__grid">
+        <div class="devices__desktop">
+          <BrowserWindow title={project.name} tone={tone}>
+            <Mock />
+          </BrowserWindow>
+        </div>
+        <div class="devices__phone">
+          <PhoneFrame tone={tone}>
+            <Mock />
+          </PhoneFrame>
+        </div>
+      </div>
+      <p class="devices__note">
+        This is a concept project designed by New Window to demonstrate our approach. It was not commissioned by, and does
+        not represent, a real business.
+      </p>
+    </div>
+  </section>
+
+  <nav class="shell next-case" aria-label="Next project">
+    <span class="eyebrow">Next concept</span>
+    <a href={`/work/${next.slug}/`}>
+      {next.name}
+      <Icon name="arrow-right" size={28} />
+    </a>
+  </nav>
+
+  <FinalCta />
+</BaseLayout>
+
+<style>
+  .case-head {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-slate);
+  }
+
+  .crumbs a {
+    color: var(--color-ink);
+  }
+
+  .case-head__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 2rem;
+    align-items: end;
+  }
+
+  .case-head__grid > div {
+    grid-column: 1 / span 7;
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+
+  .case-tag {
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--color-rule);
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 1.2rem + 4.8vw, 5.5rem);
+    font-weight: 600;
+    font-stretch: 92%;
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+
+  .case-head__summary {
+    max-width: 44ch;
+    font-size: var(--text-lead);
+    color: var(--color-slate);
+  }
+
+  .case-meta {
+    grid-column: 9 / -1;
+    display: grid;
+    border-top: 1px solid var(--color-ink);
+  }
+
+  .case-meta div {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 1rem;
+    padding-block: 0.8rem;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .case-meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+    padding-top: 0.15rem;
+  }
+
+  @media (max-width: 1023px) {
+    .case-head__grid > div,
+    .case-meta {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .case-hero {
+    padding-block: clamp(1.5rem, 4vw, 3rem);
+    background: linear-gradient(var(--color-paper) 30%, var(--color-stone) 30%);
+  }
+
+  .case-body {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 6vw, 6rem);
+    padding-block: clamp(4rem, 8vw, 6rem);
+  }
+
+  .case-block {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-ink);
+  }
+
+  .case-block h2 {
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
+  }
+
+  .case-block p,
+  .case-block li {
+    color: var(--color-slate);
+  }
+
+  .case-block ul {
+    display: grid;
+    gap: 0.75rem;
+    padding-left: 1.1rem;
+    list-style: disc;
+  }
+
+  .case-block .features {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .features li {
+    display: flex;
+    gap: 0.7rem;
+    color: var(--color-ink);
+  }
+
+  .features :global(svg) {
+    flex: none;
+    margin-top: 0.25rem;
+    color: #3f8f92;
+  }
+
+  @media (max-width: 767px) {
+    .case-body {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .devices {
+    padding-block: clamp(3.5rem, 7vw, 5.5rem);
+    background: var(--color-stone);
+  }
+
+  .devices h2 {
+    margin-bottom: 2rem;
+  }
+
+  .devices__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: center;
+  }
+
+  .devices__phone {
+    max-width: 300px;
+    width: 100%;
+    justify-self: center;
+  }
+
+  @media (max-width: 767px) {
+    .devices__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .devices__phone {
+      max-width: 260px;
+    }
+  }
+
+  .devices__note {
+    max-width: 60ch;
+    margin-top: 2rem;
+    font-size: 0.92rem;
+    color: var(--color-slate);
+  }
+
+  .next-case {
+    display: grid;
+    gap: 0.75rem;
+    padding-block: clamp(3rem, 7vw, 5rem);
+  }
+
+  .next-case a {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    justify-self: start;
+    font-size: clamp(2rem, 1.2rem + 3vw, 3.75rem);
+    font-weight: 600;
+    font-stretch: 92%;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+  }
+
+  .next-case a :global(svg) {
+    transition: transform 0.25s var(--ease-out-soft);
+  }
+
+  .next-case a:hover :global(svg) {
+    transform: translateX(6px);
+  }
+</style>

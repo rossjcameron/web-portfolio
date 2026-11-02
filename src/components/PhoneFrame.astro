@@ -1,0 +1,52 @@
+---
+interface Props {
+  class?: string
+  tone?: 'light' | 'dark'
+  label?: string
+}
+const { class: className, tone = 'light', label = 'Mobile view of a concept website design' } = Astro.props
+---
+
+<div class:list={['phone', `phone--${tone}`, className]}>
+  <div class="phone__screen" role="img" aria-label={label}>
+    <slot />
+  </div>
+</div>
+
+<style>
+  .phone {
+    aspect-ratio: 9 / 19;
+    padding: 3.2%;
+    border-radius: 14% / 6.6%;
+    background: #1b2127;
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.08),
+      0 30px 60px -20px rgb(23 32 38 / 0.45);
+  }
+
+  .phone__screen {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 11.5% / 5.4%;
+    background: #fff;
+  }
+
+  .phone--dark .phone__screen {
+    background: #0e1012;
+  }
+
+  /* Notch */
+  .phone__screen::before {
+    content: '';
+    position: absolute;
+    z-index: 5;
+    top: 1.4%;
+    left: 50%;
+    width: 28%;
+    height: 2.6%;
+    border-radius: 999px;
+    background: #1b2127;
+    transform: translateX(-50%);
+  }
+</style>
