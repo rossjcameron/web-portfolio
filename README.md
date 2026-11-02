@@ -1,12 +1,10 @@
 # Web design portfolio
 
-A one-page portfolio for selling websites, built with **Vite**, **Three.js** and **GSAP (ScrollTrigger + SplitText)**.
+A conversion-focused one-page site for selling websites to small businesses. Built with **Vite** and **GSAP**, no framework.
 
-- A real-time 3D orb (custom noise shader) that moves to a new position for each section as you scroll and wobbles when you scroll fast
-- Pinned horizontal "work" gallery on desktop; native swipe with snap points on mobile
-- Split-line headline reveals, a scroll-linked process timeline, magnetic buttons and spotlight cards
-- Respects `prefers-reduced-motion`, works without WebGL (CSS fallback orb), and the content is readable without JavaScript
-- Three.js is lazy-loaded, so the initial bundle is about 50 kB gzipped
+**What's on the page:** outcome-led hero with a quote button and trust points, benefits, project showcase, services, a four-step process, fixed-price packages (each "Choose" button pre-selects that package in the form), an about section, an FAQ that answers the usual objections, and a quote form.
+
+**Performance:** about 46 kB of JavaScript (gzipped), one variable font (Mona Sans), no images required. Motion respects `prefers-reduced-motion`, and all content is readable without JavaScript.
 
 ## Run it
 
@@ -24,39 +22,37 @@ Build for production (outputs to `dist/`):
 npm run build
 ```
 
-## Make it yours
+## Before you launch
 
-Everything you need to change is in `index.html` unless noted.
+Everything below is in `index.html` unless noted.
 
-- [ ] **Name**: replace every `Your Name` (title, meta tags, nav wordmark, footer)
-- [ ] **Email**: replace `hello@yourdomain.co.uk` (contact section, 3 places)
+- [ ] **Name**: replace `Your Name` and the `YN` initials (title, meta tags, header, about, footer, `public/favicon.svg`)
+- [ ] **Email**: replace `hello@yourdomain.co.uk` (contact section and the form's `data-email`)
+- [ ] **Photo**: add `public/me.jpg` and swap the placeholder in the about section for the `<img>` shown in the comment. A real photo makes a big difference to trust
+- [ ] **Form**: set up a free form at [Formspree](https://formspree.io) or [Web3Forms](https://web3forms.com) and paste the endpoint URL into `data-endpoint` on `#quote-form`. Until then the form opens the visitor's email app with their message filled in
+- [ ] **Prices and package contents** in the pricing section and FAQ
+- [ ] **Promises**: quote within 48 hours, reply within one working day, two rounds of changes, 30 days of free fixes. Keep only what you'll stick to
+- [ ] **Projects**: the three projects are concepts and labelled as such. Replace them with real client work (screenshots in `.project__media`) as you finish projects
+- [ ] **Testimonials**: add a short testimonials section once you have real ones (never invent them)
 - [ ] **Social links** in the footer
-- [ ] **Location line** in the hero (`Based in the UK · Working worldwide`)
-- [ ] **Prices** in the pricing section, and the care-plan note
-- [ ] **Promises** in the process section (quote within 48 hours, two revision rounds, timelines). Only keep what you will stick to
-- [ ] **About** copy
-- [ ] **Work**: the four cards are labelled *Concept*. Swap them for real projects as you finish them (screenshots can replace the CSS mock-ups), and keep the "Concept" tag on anything that isn't a real client
-- [ ] **Colours and fonts**: tokens at the top of `src/styles.css`; orb colours in `src/scene.js` (`uColorA/B/C`)
-- [ ] **Orb positions** per section: `POSES` in `src/animations.js`
 
-## How it fits together
+## Structure
 
 | File | What it does |
 | --- | --- |
-| `index.html` | All content. Sections carry `data-pose` (orb position), `data-split` (heading reveal) and `data-reveal` (fade-up) |
-| `src/main.js` | Creates the shared orb state, starts the animations, lazy-loads the 3D scene |
-| `src/scene.js` | Three.js renderer, the displaced-sphere shader, particles and the render loop (driven by GSAP's ticker) |
-| `src/animations.js` | All GSAP: hero intro, orb choreography, pinned gallery, process timeline, reveals, nav, smooth anchor links |
-| `src/styles.css` | Design tokens, layout and components |
+| `index.html` | All content and the CSS-drawn website mock-ups |
+| `src/styles.css` | Design tokens (top of file), layout and components |
+| `src/ui.js` | Sticky header, mobile menu, package pre-select, quote form handling |
+| `src/motion.js` | GSAP: hero entrance, mock-ups straightening on scroll, section reveals |
+
+To change the brand colour, edit `--accent` (and `--accent-hover`, `--accent-soft`) at the top of `src/styles.css`.
 
 ## Deploy
 
-**GitHub Pages (included):** push to `main`, then in the repo go to *Settings → Pages* and set *Source* to **GitHub Actions**. The workflow in `.github/workflows/deploy.yml` builds and publishes the site on every push.
+**GitHub Pages (included):** in the repo go to *Settings → Pages* and set *Source* to **GitHub Actions**. `.github/workflows/deploy.yml` builds and publishes on every push to `main`.
 
-**Netlify / Vercel:** import the repo; build command `npm run build`, output directory `dist`.
-
-For a contact form instead of email links, Netlify Forms or Formspree work without a backend.
+**Netlify / Vercel:** import the repo; build command `npm run build`, output directory `dist`. Netlify Forms also works for the quote form.
 
 ## Claude Code plugins
 
-`.claude/settings.json` registers the `claude-design-skillstack` marketplace and enables the design and 3D plugins, so Claude Code sessions opened on this repo (including cloud sessions) load the Three.js, GSAP, motion and web design skills automatically.
+`.claude/settings.json` registers the `claude-design-skillstack` marketplace and enables the design and animation plugins for Claude Code sessions on this repo.
