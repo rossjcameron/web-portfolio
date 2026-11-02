@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your Name · Web Design &amp; Development</title>
+    <meta
+      name="description"
+      content="Fast, memorable websites for small businesses, coaches, clubs and founders. Designed and built by Your Name."
+    />
+    <meta name="theme-color" content="#0f0d1a" />
+    <meta property="og:title" content="Your Name · Web Design &amp; Development" />
+    <meta property="og:description" content="Fast, memorable websites for small businesses, coaches, clubs and founders." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap"
+    />
+    <script>
+      document.documentElement.classList.add('js')
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- 3D background (Three.js). Falls back to a CSS gradient orb if WebGL is unavailable. -->
+    <canvas id="webgl" aria-hidden="true"></canvas>
+    <div class="orb-fallback" aria-hidden="true"></div>
+
+    <header class="nav">
+      <a class="wordmark" href="#top">Your&nbsp;Name<span>.</span></a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn--small" href="#contact">Start a project</a>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <!-- ───────────── Hero ───────────── -->
+      <section class="hero" id="top" tabindex="-1" data-pose="hero">
+        <p class="eyebrow" data-hero><span class="pulse" aria-hidden="true"></span>Booking new projects</p>
+        <h1 class="hero__title" data-hero>Websites that move people to&nbsp;<em>act.</em></h1>
+        <p class="hero__lede" data-hero>
+          I design and build fast, memorable websites for small businesses, coaches, clubs and founders. From first call to
+          launch in weeks, not months.
+        </p>
+        <div class="hero__ctas" data-hero>
+          <a class="btn magnetic" href="#contact">Start a project <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="#work">See the work</a>
+        </div>
+        <div class="hero__foot" data-hero>
+          <span>Based in the UK · Working worldwide</span>
+          <a href="#services" class="scroll-cue">Scroll <span aria-hidden="true">↓</span></a>
+        </div>
+      </section>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <div class="marquee__group">
+            <span>Landing pages</span><span>Business websites</span><span>Online shops</span><span>3D &amp; motion</span
+            ><span>SEO foundations</span><span>Hosting &amp; care</span>
+          </div>
+          <div class="marquee__group">
+            <span>Landing pages</span><span>Business websites</span><span>Online shops</span><span>3D &amp; motion</span
+            ><span>SEO foundations</span><span>Hosting &amp; care</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ───────────── Services ───────────── -->
+      <section class="section" id="services" tabindex="-1" data-pose="services">
+        <div class="section__head">
+          <p class="label">(01) Services</p>
+          <h2 class="section__title" data-split>Everything you need to look the part online.</h2>
+          <p class="section__intro" data-reveal>
+            One person, start to finish: strategy, design, build and launch. No agency mark-up and no hand-offs.
+          </p>
+        </div>
+
+        <div class="services">
+          <article class="card service" data-reveal>
+            <span class="service__num">01</span>
+            <h3>Launch pages</h3>
+            <p>A single, focused page that turns visitors into enquiries. Ideal for a new business, offer or event.</p>
+            <ul class="chips"><li>1–2 weeks</li><li>Conversion-led</li></ul>
+          </article>
+          <article class="card service" data-reveal>
+            <span class="service__num">02</span>
+            <h3>Business websites</h3>
+            <p>A multi-page site you can edit yourself, built to rank on Google and load fast on any phone.</p>
+            <ul class="chips"><li>CMS</li><li>SEO</li><li>Analytics</li></ul>
+          </article>
+          <article class="card service" data-reveal>
+            <span class="service__num">03</span>
+            <h3>Online shops</h3>
+            <p>Product pages that sell, a checkout that works, and the reporting to see what is actually making money.</p>
+            <ul class="chips"><li>Payments</li><li>Stock</li><li>Email</li></ul>
+          </article>
+          <article class="card service" data-reveal>
+            <span class="service__num">04</span>
+            <h3>3D &amp; motion</h3>
+            <p>Scroll-driven animation and real-time 3D, like this page, for brands that need to stand out.</p>
+            <ul class="chips"><li>Three.js</li><li>GSAP</li><li>WebGL</li></ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- ───────────── Work (pinned horizontal scroll on desktop, swipe on mobile) ───────────── -->
+      <section class="work" id="work" tabindex="-1" data-pose="work">
+        <div class="work__head">
+          <div>
+            <p class="label">(02) Selected work</p>
+            <h2 class="section__title" data-split>Concepts &amp; recent builds.</h2>
+          </div>
+          <div class="work__bar" aria-hidden="true"><span></span></div>
+        </div>
+
+        <div class="work__viewport">
+          <div class="work__track">
+            <article class="project" style="--m-bg: #0e2219; --m-ink: #f2f0e6; --m-accent: #c6f55a">
+              <div class="mock">
+                <div class="mock__bar"><i></i><i></i><i></i><span>Concept 01</span></div>
+                <div class="mock__screen">
+                  <div class="mock__nav"><b>FORM</b><span></span><span></span><span></span></div>
+                  <p class="mock__h">Train like it’s game day.</p>
+                  <span class="mock__btn">Book a session</span>
+                  <div class="art art--rings"></div>
+                </div>
+              </div>
+              <div class="project__meta">
+                <div>
+                  <h3>Personal trainer</h3>
+                  <p>Booking site · Launch page</p>
+                </div>
+                <span class="tag">Concept</span>
+              </div>
+            </article>
+
+            <article class="project" style="--m-bg: #f3e9dc; --m-ink: #3a2216; --m-accent: #c4552d">
+              <div class="mock">
+                <div class="mock__bar"><i></i><i></i><i></i><span>Concept 02</span></div>
+                <div class="mock__screen">
+                  <div class="mock__nav"><b>Oven&amp;Co</b><span></span><span></span><span></span></div>
+                  <p class="mock__h">Fresh bread. Slow mornings.</p>
+                  <span class="mock__btn">See the menu</span>
+                  <div class="art art--sun"></div>
+                </div>
+              </div>
+              <div class="project__meta">
+                <div>
+                  <h3>Neighbourhood café</h3>
+                  <p>Menu, bookings &amp; gift cards</p>
+                </div>
+                <span class="tag">Concept</span>
+              </div>
+            </article>
+
+            <article class="project" style="--m-bg: #0b1026; --m-ink: #e8ecff; --m-accent: #5b8cff">
+              <div class="mock">
+                <div class="mock__bar"><i></i><i></i><i></i><span>Concept 03</span></div>
+                <div class="mock__screen">
+                  <div class="mock__nav"><b>LEDGER</b><span></span><span></span><span></span></div>
+                  <p class="mock__h">Every trade, reviewed.</p>
+                  <span class="mock__btn">Start free trial</span>
+                  <div class="art art--chart">
+                    <i style="--h: 34%"></i><i style="--h: 52%" class="dn"></i><i style="--h: 46%"></i
+                    ><i style="--h: 63%"></i><i style="--h: 41%" class="dn"></i><i style="--h: 70%"></i
+                    ><i style="--h: 58%" class="dn"></i><i style="--h: 82%"></i><i style="--h: 76%"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="project__meta">
+                <div>
+                  <h3>Trading journal app</h3>
+                  <p>SaaS landing page · 3D hero</p>
+                </div>
+                <span class="tag">Concept</span>
+              </div>
+            </article>
+
+            <article class="project" style="--m-bg: #1638c9; --m-ink: #ffffff; --m-accent: #ffd23f">
+              <div class="mock">
+                <div class="mock__bar"><i></i><i></i><i></i><span>Concept 04</span></div>
+                <div class="mock__screen">
+                  <div class="mock__nav"><b>ACADEMY</b><span></span><span></span><span></span></div>
+                  <p class="mock__h">Next season starts here.</p>
+                  <span class="mock__btn">Register now</span>
+                  <div class="art art--pitch"></div>
+                </div>
+              </div>
+              <div class="project__meta">
+                <div>
+                  <h3>Football academy</h3>
+                  <p>Club site · Fixtures &amp; sign-ups</p>
+                </div>
+                <span class="tag">Concept</span>
+              </div>
+            </article>
+
+            <a class="project project--cta" href="#contact">
+              <span class="project--cta__inner">
+                <span class="label">Your turn</span>
+                <span class="project--cta__title">Your project could be next <span aria-hidden="true">→</span></span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────── Process ───────────── -->
+      <section class="section process-section" id="process" tabindex="-1" data-pose="process">
+        <div class="process-section__head">
+          <p class="label">(03) Process</p>
+          <h2 class="section__title" data-split>From first call to launch day.</h2>
+          <p class="section__intro" data-reveal>A clear, four-step process so you always know what is happening and what comes next.</p>
+        </div>
+
+        <div class="process">
+          <div class="process__rail" aria-hidden="true"><span class="process__progress"></span></div>
+          <ol>
+            <li class="step">
+              <span class="step__num">01</span>
+              <div>
+                <h3>Discovery call</h3>
+                <p>A free 30-minute call about your business, your customers and what the site needs to achieve. You get a fixed quote within 48 hours.</p>
+                <span class="step__time">Week 1</span>
+              </div>
+            </li>
+            <li class="step">
+              <span class="step__num">02</span>
+              <div>
+                <h3>Design</h3>
+                <p>Wireframes, then full designs you can click through. Two rounds of revisions included, so you see exactly what you are getting before any code is written.</p>
+                <span class="step__time">Weeks 1–2</span>
+              </div>
+            </li>
+            <li class="step">
+              <span class="step__num">03</span>
+              <div>
+                <h3>Build</h3>
+                <p>Hand-coded, responsive and fast. Accessible by default and tested on real phones, not just a desktop browser.</p>
+                <span class="step__time">Weeks 2–4</span>
+              </div>
+            </li>
+            <li class="step">
+              <span class="step__num">04</span>
+              <div>
+                <h3>Launch &amp; care</h3>
+                <p>I set up your domain, hosting and analytics, then stay on hand with an optional monthly care plan for updates and edits.</p>
+                <span class="step__time">Launch day</span>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ───────────── Pricing ───────────── -->
+      <section class="section" id="pricing" tabindex="-1" data-pose="pricing">
+        <div class="section__head">
+          <p class="label">(04) Pricing</p>
+          <h2 class="section__title" data-split>Simple packages. Fixed quotes.</h2>
+          <p class="section__intro" data-reveal>Every project is quoted up front, so there are no surprises. These are starting points.</p>
+        </div>
+
+        <div class="pricing">
+          <article class="card plan" data-reveal>
+            <h3>Launch</h3>
+            <p class="plan__desc">A focused one-page site for a new business, offer or event.</p>
+            <p class="plan__price"><span>from</span>£750</p>
+            <ul class="checks">
+              <li>One-page responsive design</li>
+              <li>Contact or booking form</li>
+              <li>Basic SEO and analytics</li>
+              <li>Live in 1–2 weeks</li>
+            </ul>
+            <a class="btn btn--ghost" href="#contact">Enquire</a>
+          </article>
+          <article class="card plan plan--featured" data-reveal>
+            <span class="plan__badge">Most popular</span>
+            <h3>Business</h3>
+            <p class="plan__desc">A complete website that you can update yourself.</p>
+            <p class="plan__price"><span>from</span>£1,950</p>
+            <ul class="checks">
+              <li>Up to 6 pages</li>
+              <li>Edit content yourself with a CMS</li>
+              <li>SEO foundations and Google Business set-up</li>
+              <li>Live in 3–4 weeks</li>
+            </ul>
+            <a class="btn magnetic" href="#contact">Enquire</a>
+          </article>
+          <article class="card plan" data-reveal>
+            <h3>Signature</h3>
+            <p class="plan__desc">A standout site with custom 3D and motion.</p>
+            <p class="plan__price"><span>from</span>£3,500</p>
+            <ul class="checks">
+              <li>Custom 3D and scroll animation</li>
+              <li>Bespoke interactions and illustration</li>
+              <li>Copywriting support</li>
+              <li>Live in 4–6 weeks</li>
+            </ul>
+            <a class="btn btn--ghost" href="#contact">Enquire</a>
+          </article>
+        </div>
+        <p class="pricing__note" data-reveal>
+          Optional care plan from £49/month: hosting, security updates and small edits each month.
+        </p>
+      </section>
+
+      <!-- ───────────── About ───────────── -->
+      <section class="section about" id="about" tabindex="-1" data-pose="about">
+        <div class="about__grid">
+          <div>
+            <p class="label">(05) About</p>
+            <h2 class="section__title" data-split>Computer scientist. Athlete. Builder.</h2>
+          </div>
+          <div class="about__body">
+            <p data-reveal>
+              I’m a computer science graduate who builds websites the way I train: prepared, consistent and focused on
+              results. You deal with me directly, from the first call to launch day and beyond.
+            </p>
+            <p data-reveal>
+              I work with small businesses, coaches, clubs and founders who want a site that looks as good as the work
+              they do.
+            </p>
+            <ul class="values">
+              <li data-reveal><strong>One point of contact.</strong> No account managers, no hand-offs.</li>
+              <li data-reveal><strong>Fixed quotes.</strong> You know the cost before anything starts.</li>
+              <li data-reveal><strong>You own it.</strong> The code, domain and content are yours.</li>
+              <li data-reveal><strong>Built to be fast.</strong> Accessible, SEO-ready and quick on any phone.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────── Contact ───────────── -->
+      <section class="contact" id="contact" tabindex="-1" data-pose="contact">
+        <p class="label">(06) Contact</p>
+        <h2 class="contact__title" data-split>Got a project in&nbsp;mind?</h2>
+        <p class="contact__lede" data-reveal>
+          Tell me what you’re building. I reply within one working day with next steps and a rough budget.
+        </p>
+        <a class="contact__email" href="mailto:hello@yourdomain.co.uk?subject=New%20website%20enquiry" data-reveal
+          >hello@yourdomain.co.uk <span aria-hidden="true">↗</span></a
+        >
+        <div class="hero__ctas contact__ctas" data-reveal>
+          <a class="btn magnetic" href="mailto:hello@yourdomain.co.uk?subject=New%20website%20enquiry"
+            >Start a project <span class="arrow" aria-hidden="true">→</span></a
+          >
+          <a class="btn btn--ghost" href="mailto:hello@yourdomain.co.uk?subject=Call%20request">Book a 30-minute call</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>© <span data-year>2026</span> Your Name</span>
+      <ul>
+        <li><a href="https://www.instagram.com/" rel="noopener">Instagram</a></li>
+        <li><a href="https://www.linkedin.com/" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+      </ul>
+      <a href="#top">Back to top ↑</a>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
